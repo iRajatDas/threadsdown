@@ -16,7 +16,7 @@ import AvatarList from "@/keystatic/components/AvatarList";
 import { DocumentRenderer } from "@keystatic/core/renderer";
 import { dateFormatter, readTime } from "@/lib/utils";
 
-export async function getSinglePostData(slug: string) {
+async function getSinglePostData(slug: string) {
   const reader = createReader("", config);
   // Get data for post matching current slug
   let post;
