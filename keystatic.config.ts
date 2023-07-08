@@ -1,3 +1,4 @@
+import { ComponentBlocks } from "@/keystatic/components/ComponentBlocks";
 import {
   GitHubConfig,
   LocalConfig,
@@ -67,6 +68,76 @@ export default config({
           formatting: true,
           links: true,
           label: "Answer",
+        }),
+      },
+    }),
+    authors: collection({
+      label: "Authors",
+      path: "content/authors/*",
+      slugField: "name",
+      schema: {
+        name: fields.slug({
+          name: {
+            label: "Name",
+            validation: {
+              length: {
+                min: 1,
+              },
+            },
+          },
+        }),
+        role: fields.text({ label: "Role" }),
+        avatar: fields.image({
+          label: "Author avatar",
+          directory: "public/images/authors",
+        }),
+      },
+    }),
+    posts: collection({
+      label: "Posts",
+      path: "content/posts/*/",
+      slugField: "title",
+      schema: {
+        title: fields.slug({
+          name: {
+            label: "Title",
+          },
+        }),
+        summary: fields.text({
+          label: "Summary",
+          validation: { length: { min: 4 } },
+        }),
+        publishedDate: fields.date({ label: "Published Date" }),
+        coverImage: fields.image({
+          label: "Image",
+          directory: "public/images/posts",
+        }),
+        wordCount: fields.integer({
+          label: "Word count",
+        }),
+        authors: fields.array(
+          fields.relationship({
+            label: "Post author",
+            collection: "authors",
+          }),
+          {
+            label: "Authors",
+            validation: { length: { min: 1 } },
+            itemLabel: (props) => props.value || "Please select an author",
+          }
+        ),
+        content: fields.document({
+          formatting: true,
+          dividers: true,
+          links: true,
+          layouts: [
+            [1, 1],
+            [1, 1, 1],
+            [2, 1],
+            [1, 2, 1],
+          ],
+          label: "Content",
+          componentBlocks: ComponentBlocks,
         }),
       },
     }),
