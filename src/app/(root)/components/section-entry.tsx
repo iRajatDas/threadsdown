@@ -5,7 +5,6 @@ const EntrySection = async () => {
   const reader = createReader(process.cwd(), config);
   const homepageData = await reader.singletons.homepage.read();
 
-  console.log(homepageData);
   return (
     <div className="text-base w-full font-nrmal px-default py-4 text-center space-y-2">
       <h1 className="text-xl md:text-system-24 md:leading-system-24 font-bold tracking-tight">

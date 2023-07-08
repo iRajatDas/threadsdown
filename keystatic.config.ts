@@ -1,6 +1,7 @@
 import {
   GitHubConfig,
   LocalConfig,
+  collection,
   config,
   fields,
   singleton,
@@ -35,6 +36,37 @@ export default config({
             },
           },
           label: "Alert Content",
+        }),
+      },
+    }),
+  },
+  collections: {
+    faqs: collection({
+      label: "FAQs",
+      path: "content/_homepage/faqs/*/",
+      slugField: "question",
+      schema: {
+        question: fields.slug({
+          name: {
+            label: "Question",
+            validation: {
+              length: {
+                min: 10,
+                max: 150,
+              },
+            },
+          },
+        }),
+        publishedDate: fields.date({
+          label: "Published Date",
+          validation: {
+            isRequired: false,
+          },
+        }),
+        answer: fields.document({
+          formatting: true,
+          links: true,
+          label: "Answer",
         }),
       },
     }),
