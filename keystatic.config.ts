@@ -13,7 +13,7 @@ const storage: LocalConfig["storage"] | GitHubConfig["storage"] =
         kind: "github",
         repo: {
           owner: "iRajatDas",
-          name: "instathreaddown",
+          name: "threadsdown",
         },
       };
 
