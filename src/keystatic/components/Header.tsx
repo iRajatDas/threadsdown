@@ -1,7 +1,9 @@
 'use client'
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import React from "react";
+// import kLogo from '../../../'
 
 export const baseClasses =
   "no-underline justify-center items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 text-gray-800 px-0 hover:text-cyan-700 hover:bg-none bg-none font-medium shrink-0";
@@ -24,7 +26,7 @@ const KeystaticBanner = () => {
   return (
     <div className="py-3 external-link bg-black text-white fill-white text-center text-sm">
       You&apos;re looking at a{" "}
-      <img className="my-0 inline" src="/keystatic.svg" alt="Keystatic logo" />{" "}
+      <Image width={200} height={100} className="my-0 inline" src="/keystatic.svg" alt="Keystatic logo" />{" "}
       <strong className="text-white">KEYSTATIC</strong> template.{" "}
       <a
         href="https://keystatic.thinkmill.com.au/"

@@ -50,11 +50,9 @@ type Props = {
 };
 
 export async function generateMetadata(
-  { params, searchParams }: Props,
-  parent?: ResolvingMetadata
+  { params, searchParams }: Props
 ): Promise<Metadata> {
   const { post } = await getSinglePostData(params.slug);
-
   return {
     title: post.title,
     description: post.summary,
