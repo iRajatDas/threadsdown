@@ -22,10 +22,10 @@ jobs:
           echo "GPA=${{ secrets.GPA }}" >> .env
 
       - name: Install dependencies
-        run: pnpm install
+        run: npm install
 
       - name: Build application
-        run: pnpm build
+        run: npm run build
 
       - name: Deploy to DigitalOcean
         uses: appleboy/ssh-action@master
