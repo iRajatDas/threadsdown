@@ -66,7 +66,7 @@ const Homepage = async () => {
   const posts = await getAllPostData();
 
   const single = await getSinglePostData("how-to-delete-an-instagram-account");
-  console.log(single);
+  console.log(single, 'hello');
   return (
     <>
       <EntrySection />
