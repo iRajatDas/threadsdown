@@ -19,6 +19,20 @@ jobs:
       - name: Install sshpass
         run: sudo apt-get install -y sshpass
 
+      - name: Set up Node.js 18.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+
+      - name: Install PNPM
+        run: npm install -g pnpm
+      
+      - name: Setup PNPM
+        run: setup pnpm
+      
+      - name: Install PM2
+        run: pnpm i -g pm2
+
       - name: SSH into DigitalOcean droplet
         uses: appleboy/ssh-action@master
         with:
@@ -26,7 +40,6 @@ jobs:
           username: ${{ secrets.DO_USERNAME }}
           password: ${{ secrets.DO_PASSWORD }}
           script: |
-            npm i -g pm2
             cd /var/www/threadsdown/
             echo "Folder switched ✅"
             echo "Running PULL ⚠️"
@@ -42,5 +55,5 @@ jobs:
             echo "Deleting .next folder ⚠️"
             rm -rf .next
             echo "Deleted .next folder ✅"
-            npm run build
+            pnpm run build
             pm2 restart instaThreadsDown --update-env
