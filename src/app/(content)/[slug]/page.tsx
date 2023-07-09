@@ -106,7 +106,7 @@ const Post = async ({ params }: { params: { slug: string } }) => {
           </div>
           <div className="flex justify-between text-muted-foreground">
             <span className="flex gap-1">
-              {post.publishedDate && (
+              {post.publishedDate && ( 
                 <p className="">
                   {dateFormatter(post.publishedDate, "do MMM yyyy")}
                 </p>
