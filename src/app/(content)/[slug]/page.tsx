@@ -26,11 +26,11 @@ async function getSinglePostData(slug: string) {
     });
   } catch (error) {
     console.log(error)
-    notFound();
+    // notFound();
   }
 
   const authorsData = await Promise.all(
-    post.authors.map(async (authorSlug) => {
+    post!!.authors.map(async (authorSlug) => {
       const author = await reader.collections.authors.read(authorSlug || "");
       return { ...author, slug: authorSlug };
     })
@@ -131,7 +131,7 @@ const Post = async ({ params }: { params: { slug: string } }) => {
           )}
           <div className="mt-10">
             <DocumentRenderer
-              document={post.content}
+              document={post.content!!}
               componentBlocks={{
                 inlineCta: (props) => (
                   <InlineCTA
