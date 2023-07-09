@@ -54,8 +54,16 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { post } = await getSinglePostData(params.slug);
   return {
+    metadataBase: new URL(
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000"
+        : "https://instathreadsdown.com"
+    ),
     title: post.title,
     description: post.summary,
+    alternates: {
+      canonical: `/${post.slug}`,
+    },
     openGraph: {
       title: post.title,
       description: post.summary,
