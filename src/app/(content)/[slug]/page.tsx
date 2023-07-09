@@ -99,31 +99,32 @@ const Post = async ({ params }: { params: { slug: string } }) => {
         {post.title}
       </h1> */}
       <div className="max-w-4xl mx-auto px-4 md:px-10">
-        <div className="flex gap-3 items-center flex-wrap">
-          {authors && <AvatarList authors={authors} />}
-          <p className="font-semibold">{formattedNames}</p>
+        <div className='flex items-center justify-between gap-2 bg-barcelona-secondary-background py-5 md:-mx-10 px-4 rounded-2xl border-0.5 border-barcelona-media-outline mt-4'>
+          <div className="flex gap-3 items-center flex-wrap">
+            {authors && <AvatarList authors={authors} />}
+            <p className="font-semibold">{formattedNames}</p>
+          </div>
+          <div className="flex justify-between text-muted-foreground">
+            <span className="flex gap-1">
+              {post.publishedDate && (
+                <p className="">
+                  {dateFormatter(post.publishedDate, "do MMM yyyy")}
+                </p>
+              )}
+              {post.wordCount && post.wordCount !== 0 ? (
+                <p className="text-muted-foreground">
+                  · {readTime(post.wordCount)}
+                </p>
+              ) : null}
+            </span>
+          </div>
         </div>
 
-        <div className="mt-4 flex justify-between text-muted-foreground">
-          <span className="flex gap-1">
-            {post.publishedDate && (
-              <p className="">
-                {dateFormatter(post.publishedDate, "do MMM yyyy")}
-              </p>
-            )}
-            {post.wordCount && post.wordCount !== 0 ? (
-              <p className="text-muted-foreground">
-                · {readTime(post.wordCount)}
-              </p>
-            ) : null}
-          </span>
-        </div>
-
-        <div className="mt-8 prose max-w-none prose-headings:text-barcelona-primary-text prose-p:text-barcelona-primary-text prose-ul:text-barcelona-primary-text prose-a:text-barcelona-link-text prose-strong:text-barcelona-primary-text">
+        <div className="mt-8 prose-lg max-w-none prose-headings:text-barcelona-primary-text prose-p:text-barcelona-primary-text prose-ul:text-barcelona-primary-text prose-a:text-barcelona-link-text prose-strong:text-barcelona-primary-text">
           <h1 className="mt-4 text-3xl md:text-system-28 md:leading-system-28 font-extrabold tracking-tight">
             {post.title}
           </h1>
-          <p className="text-lg">{post.summary}</p>
+          <p className="text-base">{post.summary}</p>
           {post.coverImage && (
             <div className="mt-10 not-prose md:-mx-24 rounded-2xl overflow-hidden border-0.5 border-barcelona-media-outline shadow-xl shadow-barcelona-secondary-background">
               <NextImage
