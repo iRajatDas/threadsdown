@@ -8,9 +8,10 @@ import { createReader } from "@keystatic/core/reader";
 import config from "../../../keystatic.config";
 import Link from "next/link";
 import FAQSection from "./components/section-faq";
+import { slug } from "@keystatic/core/dist/declarations/src/form/fields";
 
 async function getAllPostData() {
-  const reader = createReader("", config);
+  const reader = createReader(process.cwd(), config);
   const postSlugs = await reader.collections.posts.list();
 
   const postData = await Promise.all(
@@ -39,9 +40,33 @@ async function getAllPostData() {
   return postData;
 }
 
+async function getSinglePostData(slug: string) {
+  const reader = createReader(process.cwd(), config);
+  const post = await reader.collections.posts.readOrThrow(slug, {
+    resolveLinkedFiles: true,
+  });
+
+  const authorsData = await Promise.all(
+    post.authors.map(async (authorSlug) => {
+      const author = await reader.collections.authors.read(authorSlug || "");
+      return { ...author, slug: authorSlug };
+    })
+  );
+
+  const postData = {
+    ...post,
+    slug,
+    authors: authorsData,
+  };
+
+  return postData;
+}
+
 const Homepage = async () => {
   const posts = await getAllPostData();
 
+  const single = await getSinglePostData(posts[0].slug);
+  console.log(single);
   return (
     <>
       <EntrySection />
