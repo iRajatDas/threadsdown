@@ -1,20 +1,20 @@
 import React from "react";
 import { createReader } from "@keystatic/core/reader";
 import config from "../../../../keystatic.config";
-import { notFound } from "next/navigation";
-import { Metadata, ResolvingMetadata } from "next";
-import Banner from "@/keystatic/components/Banner";
-import InlineCTA from "@/keystatic/components/InlineCTA";
-import Divider from "@/keystatic/components/Divider";
-import Image from "@/keystatic/components/Image";
-import YouTubeEmbed from "@/keystatic/components/YouTubeEmbed";
-import TweetEmbed from "@/keystatic/components/TweetEmbed";
-import LoopingVideo from "@/keystatic/components/LoopingVideo";
-import NextImage from "next/image";
-import Testimonial from "@/keystatic/components/Testimonial";
-import AvatarList from "@/keystatic/components/AvatarList";
-import { DocumentRenderer } from "@keystatic/core/renderer";
-import { dateFormatter, readTime } from "@/lib/utils";
+// import { notFound } from "next/navigation";
+import { Metadata } from "next";
+// import Banner from "@/keystatic/components/Banner";
+// import InlineCTA from "@/keystatic/components/InlineCTA";
+// import Divider from "@/keystatic/components/Divider";
+// import Image from "@/keystatic/components/Image";
+// import YouTubeEmbed from "@/keystatic/components/YouTubeEmbed";
+// import TweetEmbed from "@/keystatic/components/TweetEmbed";
+// import LoopingVideo from "@/keystatic/components/LoopingVideo";
+// import NextImage from "next/image";
+// import Testimonial from "@/keystatic/components/Testimonial";
+// import AvatarList from "@/keystatic/components/AvatarList";
+// import { DocumentRenderer } from "@keystatic/core/renderer";
+// import { dateFormatter, readTime } from "@/lib/utils";
 
 const getSinglePostData = async (slug: string) => {
   const reader = createReader(process.cwd(), config);
@@ -54,51 +54,54 @@ type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
-export async function generateMetadata({
-  params,
-  searchParams,
-}: Props): Promise<Metadata> {
-  const { post } = await getSinglePostData(params.slug);
-  return {
-    metadataBase: new URL(
-      process.env.NODE_ENV === "development"
-        ? "http://localhost:3000"
-        : "https://instathreadsdown.com"
-    ),
-    title: post.title,
-    description: post.summary,
-    alternates: {
-      canonical: `/${post.slug}`,
-    },
-    openGraph: {
-      title: post.title,
-      description: post.summary,
-      images: [
-        post.coverImage
-          ? `/images/posts/${post.slug}/${post.coverImage}`
-          : "/images/seo-image.png",
-      ],
-    },
-  };
-}
+// export async function generateMetadata({
+//   params,
+//   searchParams,
+// }: Props): Promise<Metadata> {
+//   const { post } = await getSinglePostData(params.slug);
+//   return {
+//     metadataBase: new URL(
+//       process.env.NODE_ENV === "development"
+//         ? "http://localhost:3000"
+//         : "https://instathreadsdown.com"
+//     ),
+//     title: post.title,
+//     description: post.summary,
+//     alternates: {
+//       canonical: `/${post.slug}`,
+//     },
+//     openGraph: {
+//       title: post.title,
+//       description: post.summary,
+//       images: [
+//         post.coverImage
+//           ? `/images/posts/${post.slug}/${post.coverImage}`
+//           : "/images/seo-image.png",
+//       ],
+//     },
+//   };
+// }
 
 const Post = async ({ params }: { params: { slug: string } }) => {
-  const { post, authors } = await getSinglePostData(params.slug);
-  const names = authors.reduce(
-    (acc: string[], author) =>
-      "name" in author ? [...acc, author.name as string] : acc,
-    []
-  );
-  const formattedNames = new Intl.ListFormat("en-AU")
-    .format(names)
-    .replace("and", "&");
-  const content = await post.content();
+  const reader = createReader(process.cwd(), config);
+  const post = await reader.collections.posts.read(params.slug);
+
+  // const { post, authors } = await getSinglePostData(params.slug);
+  // const names = authors.reduce(
+  //   (acc: string[], author) =>
+  //     "name" in author ? [...acc, author.name as string] : acc,
+  //   []
+  // );
+  // const formattedNames = new Intl.ListFormat("en-AU")
+  //   .format(names)
+  //   .replace("and", "&");
+  // const content = await post.content();
   return (
     <article>
-      {/* <h1 className="text-xl md:text-system-24 md:leading-system-24 font-bold tracking-tight">
-        {post.title}
-      </h1> */}
-      <div className="max-w-4xl mx-auto px-4 md:px-10">
+      <h1 className="text-xl md:text-system-24 md:leading-system-24 font-bold tracking-tight">
+        {post?.title}
+      </h1>
+      {/* <div className="max-w-4xl mx-auto px-4 md:px-10">
         <div className="flex gap-3 items-center flex-wrap">
           {authors && <AvatarList authors={authors} />}
           <p className="font-semibold">{formattedNames}</p>
@@ -187,7 +190,7 @@ const Post = async ({ params }: { params: { slug: string } }) => {
             />
           </div>
         </div>
-      </div>
+      </div> */}
     </article>
   );
 };
