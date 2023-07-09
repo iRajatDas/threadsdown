@@ -25,6 +25,7 @@ async function getSinglePostData(slug: string) {
       resolveLinkedFiles: true,
     });
   } catch (error) {
+    console.log(error)
     notFound();
   }
 
