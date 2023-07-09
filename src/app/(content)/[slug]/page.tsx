@@ -17,7 +17,7 @@ import { DocumentRenderer } from "@keystatic/core/renderer";
 import { dateFormatter, readTime } from "@/lib/utils";
 
 const getSinglePostData = async (slug: string) => {
-  const reader = createReader("", config);
+  const reader = createReader(process.cwd(), config);
   try {
     const post = await reader.collections.posts.read(slug);
 
