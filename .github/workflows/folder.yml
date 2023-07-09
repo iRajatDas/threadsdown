@@ -28,5 +28,18 @@ jobs:
           script: |
             cd /var/www/threadsdown/
             echo "Folder switched ✅"
-            mkdir ~/new_folder
-            echo "Folder created successfully!"
+            echo "Running PULL ⚠️"
+            git pull
+            echo "PULL RAN ✅"
+            echo "Adding ENV Variables ⚠️"
+            echo "KEYSTATIC_GITHUB_CLIENT_ID=${{ secrets.KEYSTATIC_GITHUB_CLIENT_ID }}" > .env
+            echo "KEYSTATIC_GITHUB_CLIENT_SECRET=${{ secrets.KEYSTATIC_GITHUB_CLIENT_SECRET }}" >> .env
+            echo "KEYSTATIC_SECRET=${{ secrets.KEYSTATIC_SECRET }}" >> .env
+            echo "NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG=${{ secrets.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG }}" >> .env
+            echo "GPA=${{ secrets.GPA }}" >> .env
+            echo "Added ENV Variables ✅"
+            echo "Deleting .next folder ⚠️"
+            rm -rf .next
+            echo "Deleted .next folder ✅"
+            pnpm build
+            pm2 restart instaThreadsDown --update-env
