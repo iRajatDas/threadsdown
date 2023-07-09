@@ -24,14 +24,14 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install PNPM
-        run: npm install -g pnpm
+      # - name: Install PNPM
+      #   run: npm install -g pnpm
       
-      - name: Setup PNPM
-        run: setup pnpm
+      # - name: Setup PNPM
+      #   run: setup pnpm
       
       - name: Install PM2
-        run: pnpm i -g pm2
+        run: npm i -g pm2
 
       - name: SSH into DigitalOcean droplet
         uses: appleboy/ssh-action@master
@@ -55,5 +55,5 @@ jobs:
             echo "Deleting .next folder ⚠️"
             rm -rf .next
             echo "Deleted .next folder ✅"
-            pnpm run build
+            npm run build
             pm2 restart instaThreadsDown --update-env
