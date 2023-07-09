@@ -7,7 +7,7 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-  
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -26,5 +26,7 @@ jobs:
           username: ${{ secrets.DO_USERNAME }}
           password: ${{ secrets.DO_PASSWORD }}
           script: |
+            cd /var/www/threadsdown/
+            echo "Folder switched ✅"
             mkdir ~/new_folder
             echo "Folder created successfully!"
