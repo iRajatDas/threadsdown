@@ -44,7 +44,7 @@ export default config({
   collections: {
     faqs: collection({
       label: "FAQs",
-      path: "content/_homepage/faqs/*/",
+      path: "src/content/_homepage/faqs/*/",
       slugField: "question",
       schema: {
         question: fields.slug({
@@ -73,7 +73,7 @@ export default config({
     }),
     authors: collection({
       label: "Authors",
-      path: "content/authors/*",
+      path: "src/content/authors/*",
       slugField: "name",
       schema: {
         name: fields.slug({
@@ -95,7 +95,7 @@ export default config({
     }),
     posts: collection({
       label: "Posts",
-      path: "content/posts/*/",
+      path: "src/content/posts/*/",
       slugField: "title",
       schema: {
         title: fields.slug({
