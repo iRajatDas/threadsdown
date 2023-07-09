@@ -16,43 +16,48 @@ import AvatarList from "@/keystatic/components/AvatarList";
 import { DocumentRenderer } from "@keystatic/core/renderer";
 import { dateFormatter, readTime } from "@/lib/utils";
 
-async function getSinglePostData(slug: string) {
+const getSinglePostData = async (slug: string) => {
   const reader = createReader("", config);
-  // Get data for post matching current slug
-  let post;
   try {
-    post = await reader.collections.posts.readOrThrow(slug, {
-      resolveLinkedFiles: true,
-    });
-  } catch (error) {
-    console.log(error)
-    // notFound();
+    const post = await reader.collections.posts.read(slug);
+
+    if (post) {
+      const authorsData = await Promise.all(
+        post.authors.map(async (authorSlug) => {
+          const author = await reader.collections.authors.read(
+            authorSlug || ""
+          );
+          return { ...author, slug: authorSlug };
+        })
+      );
+
+      return {
+        post: {
+          ...post,
+          slug,
+        },
+        authors: authorsData,
+      };
+    } else {
+      throw new Error(`Entry "${slug}" not found in collection "posts"`);
+    }
+  } catch (error: any) {
+    // notFound()
+    throw new Error(
+      `Error retrieving post with slug "${slug}": ${error.message}`
+    );
   }
-
-  const authorsData = await Promise.all(
-    post!!.authors.map(async (authorSlug) => {
-      const author = await reader.collections.authors.read(authorSlug || "");
-      return { ...author, slug: authorSlug };
-    })
-  );
-
-  return {
-    post: {
-      ...post,
-      slug,
-    },
-    authors: authorsData,
-  };
-}
+};
 
 type Props = {
   params: { slug: string };
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
-export async function generateMetadata(
-  { params, searchParams }: Props
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+  searchParams,
+}: Props): Promise<Metadata> {
   const { post } = await getSinglePostData(params.slug);
   return {
     metadataBase: new URL(
@@ -87,6 +92,7 @@ const Post = async ({ params }: { params: { slug: string } }) => {
   const formattedNames = new Intl.ListFormat("en-AU")
     .format(names)
     .replace("and", "&");
+  const content = await post.content();
   return (
     <article>
       {/* <h1 className="text-xl md:text-system-24 md:leading-system-24 font-bold tracking-tight">
@@ -131,7 +137,7 @@ const Post = async ({ params }: { params: { slug: string } }) => {
           )}
           <div className="mt-10">
             <DocumentRenderer
-              document={post.content!!}
+              document={content}
               componentBlocks={{
                 inlineCta: (props) => (
                   <InlineCTA
