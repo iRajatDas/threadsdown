@@ -16,38 +16,29 @@ import AvatarList from "@/keystatic/components/AvatarList";
 import { DocumentRenderer } from "@keystatic/core/renderer";
 import { dateFormatter, readTime } from "@/lib/utils";
 
-const getSinglePostData = async (slug: string) => {
+async function getSinglePostData(slug: string) {
   const reader = createReader(process.cwd(), config);
-  try {
-    const post = await reader.collections.posts.read(slug);
+  const post = await reader.collections.posts.read(slug);
 
-    if (post) {
-      const authorsData = await Promise.all(
-        post.authors.map(async (authorSlug) => {
-          const author = await reader.collections.authors.read(
-            authorSlug || ""
-          );
-          return { ...author, slug: authorSlug };
-        })
-      );
-
-      return {
-        post: {
-          ...post,
-          slug,
-        },
-        authors: authorsData,
-      };
-    } else {
-      throw new Error(`Entry "${slug}" not found in collection "posts"`);
-    }
-  } catch (error: any) {
-    // notFound()
-    throw new Error(
-      `Error retrieving post with slug "${slug}": ${error.message}`
+  if (post) {
+    const authorsData = await Promise.all(
+      post.authors.map(async (authorSlug) => {
+        const author = await reader.collections.authors.read(authorSlug || "");
+        return { ...author, slug: authorSlug };
+      })
     );
+
+    return {
+      post: {
+        ...post,
+        slug,
+      },
+      authors: authorsData,
+    };
+  } else {
+    return null; // Return null if the post is not found
   }
-};
+}
 
 type Props = {
   params: { slug: string };
@@ -58,7 +49,34 @@ export async function generateMetadata({
   params,
   searchParams,
 }: Props): Promise<Metadata> {
-  const { post } = await getSinglePostData(params.slug);
+  const postData = await getSinglePostData(params.slug);
+  if (!postData) {
+    // Handle the case when the post is not found
+    return {
+      metadataBase: new URL(
+        process.env.NODE_ENV === "development"
+          ? "http://localhost:3000"
+          : "https://instathreadsdown.com"
+      ),
+      title: "Post not found",
+      description: "The requested post was not found",
+      robots: {
+        index: false,
+        follow: true,
+        nocache: true,
+        googleBot: {
+          index: true,
+          follow: false,
+          noimageindex: true,
+          "max-video-preview": -1,
+          "max-image-preview": "large",
+          "max-snippet": -1,
+        },
+      },
+    };
+  }
+  const { post } = postData;
+
   return {
     metadataBase: new URL(
       process.env.NODE_ENV === "development"
@@ -79,11 +97,44 @@ export async function generateMetadata({
           : "/images/seo-image.png",
       ],
     },
+    robots: {
+      index: true,
+      follow: true,
+      nocache: false,
+      googleBot: {
+        index: true,
+        follow: true,
+        noimageindex: false,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
   };
 }
 
 const Post = async ({ params }: { params: { slug: string } }) => {
-  const { post, authors } = await getSinglePostData(params.slug);
+  const postData = await getSinglePostData(params.slug);
+  if (!postData) {
+    // Handle the case when the post is not found
+    return (
+      <div
+        className="h-full px-default py-4 md:py-12 grid place-items-center rounded-2xl"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='12' ry='12' stroke='%23333' stroke-width='1' stroke-dasharray='6%2c 14' stroke-dashoffset='49' stroke-linecap='square'/%3e%3c/svg%3e");`,
+        }}
+      >
+        <h2 className="text-xl md:text-system-32 md:leading-system-32 font-bold tracking-tight text-center">
+          Post not found
+        </h2>
+      </div>
+    );
+  }
+
+  const { post, authors } = postData;
+
+  const content = await post.content();
+
   const names = authors.reduce(
     (acc: string[], author) =>
       "name" in author ? [...acc, author.name as string] : acc,
@@ -92,21 +143,20 @@ const Post = async ({ params }: { params: { slug: string } }) => {
   const formattedNames = new Intl.ListFormat("en-AU")
     .format(names)
     .replace("and", "&");
-  const content = await post.content();
   return (
     <article>
       {/* <h1 className="text-xl md:text-system-24 md:leading-system-24 font-bold tracking-tight">
         {post.title}
       </h1> */}
       <div className="max-w-4xl mx-auto px-4 md:px-10">
-        <div className='flex items-center justify-between gap-2 bg-barcelona-secondary-background py-5 md:-mx-10 px-4 rounded-2xl border-0.5 border-barcelona-media-outline mt-4'>
+        <div className="flex items-center justify-between gap-2 bg-barcelona-secondary-background py-5 md:-mx-10 px-4 rounded-2xl border-0.5 border-barcelona-media-outline mt-4">
           <div className="flex gap-3 items-center flex-wrap">
             {authors && <AvatarList authors={authors} />}
             <p className="font-semibold">{formattedNames}</p>
           </div>
           <div className="flex justify-between text-muted-foreground">
             <span className="flex gap-1">
-              {post.publishedDate && ( 
+              {post.publishedDate && (
                 <p className="">
                   {dateFormatter(post.publishedDate, "do MMM yyyy")}
                 </p>
