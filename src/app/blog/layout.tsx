@@ -1,8 +1,7 @@
-import "@/styles/globals.css";
-import Header from "@/components/header";
 import Footer from "@/components/footer";
+import Header from "@/components/header";
 import { Toaster } from "@/components/ui/toaster";
-import { cn } from "@/lib/utils";
+import "@/styles/globals.css";
 import localFont from "next/font/local";
 
 const inter = localFont({
@@ -31,13 +30,6 @@ const inter = localFont({
   variable: "--font-sans",
 });
 
-export const metadata = {
-  title:
-    "Threads Video Downloader | Download Photos & Videos From Thread For Free In High Quality",
-  description:
-    "Download Thread Videos and Photos In High Resolution For Free With Ease - Without Watermarks and Free Downloads",
-};
-
 export default function RootLayout({
   children,
 }: {
@@ -45,7 +37,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className={cn("font-sans")}>
+      <body className="font-sans">
         <div className="max-w-3xl mx-auto w-full h-full">
           <Toaster />
           <div className="flex flex-col h-full">

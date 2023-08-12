@@ -1,4 +1,5 @@
 const typography = require("@tailwindcss/typography");
+const { fontFamily } = require("tailwindcss/defaultTheme");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -96,6 +97,10 @@ module.exports = {
       },
       padding: {
         default: "0.75rem",
+      },
+      fontFamily: {
+        sans: ["var(--font-sans)", ...fontFamily.sans],
+        heading: ["var(--font-heading)", ...fontFamily.sans],
       },
       fontSize: {
         "system-10": "10px",
