@@ -48,8 +48,8 @@ export const metadata = {
   ],
   authors: [
     {
-      name: "shadcn",
-      url: "https://shadcn.com",
+      name: "instaThreadsDown",
+      url: siteConfig.url
     },
   ],
   creator: "shadcn",
