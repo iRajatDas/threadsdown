@@ -1,5 +1,6 @@
 type SiteConfig = {
   name: string;
+  authorName: string;
   description: string;
   url: string;
   ogImage: string;
@@ -11,6 +12,7 @@ type SiteConfig = {
 
 export const siteConfig: SiteConfig = {
   name: "Insta Threads Downloader",
+  authorName: "Rajat",
   description:
     "Download Thread Videos and Photos In High Resolution For Free With Ease - Without Watermarks and Free Downloads",
   url: "https://instathreadsdown.com",

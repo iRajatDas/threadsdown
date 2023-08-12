@@ -1,6 +1,6 @@
 {
-  "name": "Taxonomy",
-  "short_name": "Taxonomy",
+  "name": "Insta Threads Down",
+  "short_name": "Insta Threads Down",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -13,7 +13,7 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
+  "theme_color": "#181818",
+  "background_color": "#181818",
   "display": "standalone"
 }
