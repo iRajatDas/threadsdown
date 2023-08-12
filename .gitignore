@@ -36,7 +36,7 @@ yarn-error.log*
 next-env.d.ts
 
 # contentlayer generated content
-.contentlayer/generated
+.contentlayer
 
 #keystatic content
 # content
