@@ -53,7 +53,9 @@ export default async function BlogPage() {
               )}
               <h2 className="text-2xl font-extrabold">{post.title}</h2>
               {post.description && (
-                <p className="text-muted-foreground">{post.description}</p>
+                <p className="text-muted-foreground line-clamp-3">
+                  {post.description}
+                </p>
               )}
               {post.date && (
                 <p className="text-sm text-muted-foreground">

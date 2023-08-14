@@ -59,7 +59,7 @@ const Homepage = async () => {
                     )}
                     <h2 className="text-2xl font-extrabold">{post.title}</h2>
                     {post.description && (
-                      <p className="text-muted-foreground">
+                      <p className="text-muted-foreground line-clamp-3">
                         {post.description}
                       </p>
                     )}
