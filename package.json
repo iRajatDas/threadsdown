@@ -6,7 +6,8 @@
     "dev": "concurrently \"contentlayer dev\" \"next dev\"",
     "build": "contentlayer build && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postbuild": "pnpx next-sitemap"
   },
   "pnpm": {
     "overrides": {

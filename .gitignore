@@ -38,5 +38,6 @@ next-env.d.ts
 # contentlayer generated content
 .contentlayer
 
-#keystatic content
-# content
+# sitemap
+public/sitemap*.xml
+public/robots.txt
