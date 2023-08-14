@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import localFont from "next/font/local";
 import { siteConfig } from "@/config/site";
+import { Metadata } from "next";
 
 const inter = localFont({
   src: [
@@ -32,13 +33,18 @@ const inter = localFont({
   variable: "--font-sans",
 });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: {
     default:
       "Threads Video Downloader | Download Photos & Videos From Thread For Free In High Quality",
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  robots: {
+    googleBot: "index,follow",
+    index: true,
+    follow: true,
+  },
   keywords: [
     "threads video downloader",
     "thread video downloader",

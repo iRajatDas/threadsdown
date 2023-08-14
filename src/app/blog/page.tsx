@@ -6,7 +6,11 @@ import { compareDesc } from "date-fns";
 import { formatDate } from "@/lib/utils";
 
 export const metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL as string),
   title: "Blog List - Insta Threads Down",
+  alternates: {
+    canonical: "/blog",
+  },
 };
 
 export default async function BlogPage() {

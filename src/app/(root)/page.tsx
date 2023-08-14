@@ -12,6 +12,14 @@ import Link from "next/link";
 import { allPosts } from "contentlayer/generated";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 import { buttonVariants } from "@/components/ui/button";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL as string),
+  alternates: {
+    canonical: "/",
+  },
+};
 
 const Homepage = async () => {
   const posts = allPosts
