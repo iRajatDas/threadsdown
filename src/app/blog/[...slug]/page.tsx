@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { allAuthors, allPosts } from "contentlayer/generated";
+import { ArticleJsonLd } from "next-seo";
 
 import { Mdx } from "@/components/mdx-components";
 
@@ -12,6 +13,10 @@ import { absoluteUrl, cn, formatDate } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { LuChevronLeft } from "react-icons/lu";
 import { siteConfig } from "@/config/site";
+
+const url = process.env.NEXT_PUBLIC_APP_URL!! || siteConfig.url;
+
+const ogUrl = new URL(`${url}/api/og`);
 
 interface PostPageProps {
   params: {
@@ -38,10 +43,6 @@ export async function generateMetadata({
   if (!post) {
     return {};
   }
-
-  const url = process.env.NEXT_PUBLIC_APP_URL!! || siteConfig.url;
-
-  const ogUrl = new URL(`${url}/api/og`);
   ogUrl.searchParams.set("heading", post.title);
   ogUrl.searchParams.set("type", "Blog Post");
   ogUrl.searchParams.set("mode", "dark");
@@ -66,6 +67,7 @@ export async function generateMetadata({
         },
       ],
     },
+
     twitter: {
       card: "summary_large_image",
       title: post.title,
@@ -95,73 +97,91 @@ export default async function PostPage({ params }: PostPageProps) {
   );
 
   return (
-    <article className="container relative max-w-3xl py-6 lg:py-10">
-      <Link
-        href="/blog"
-        className={cn(
-          buttonVariants({ variant: "ghost" }),
-          "absolute left-[-200px] top-14 hidden xl:inline-flex"
-        )}
-      >
-        <LuChevronLeft /> See all posts
-      </Link>
-      <div>
-        {post.date && (
-          <time
-            dateTime={post.date}
-            className="block text-sm text-muted-foreground"
-          >
-            Published on {formatDate(post.date)}
-          </time>
-        )}
-        <h1 className="mt-2 inline-block font-bold text-4xl leading-tight lg:text-5xl">
-          {post.title}
-        </h1>
-        {authors?.length ? (
-          <div className="mt-4 flex space-x-4">
-            {authors.map((author) =>
-              author ? (
-                <Link
-                  key={author._id}
-                  href={`https://twitter.com/${author.twitter}`}
-                  className="flex items-center space-x-2 text-sm"
-                >
-                  <Image
-                    src={author.avatar}
-                    alt={author.title}
-                    width={42}
-                    height={42}
-                    className="rounded-full bg-white"
-                  />
-                  <div className="flex-1 text-left leading-tight">
-                    <p className="font-medium">{author.title}</p>
-                    <p className="text-[12px] text-muted-foreground">
-                      @{author.twitter}
-                    </p>
-                  </div>
-                </Link>
-              ) : null
-            )}
-          </div>
-        ) : null}
-      </div>
-      {post.image && (
-        <Image
-          src={post.image}
-          alt={post.title}
-          width={720}
-          height={405}
-          className="my-8 rounded-md border bg-muted transition-colors"
-          priority
-        />
-      )}
-      <Mdx code={post.body.code} />
-      <hr className="mt-12" />
-      <div className="flex justify-center py-6 lg:py-10">
-        <Link href="/blog" className={cn(buttonVariants({ variant: "ghost" }))}>
+    <>
+      <ArticleJsonLd
+        type="BlogPosting"
+        url={absoluteUrl(post.slug)}
+        title={post.title}
+        images={[ogUrl.toString()]}
+        datePublished={post.date}
+        dateModified={post.date}
+        authorName={post.authors.map((author) => ({
+          name: author,
+        }))}
+        description={post.title}
+        useAppDir
+      />
+      <article className="container relative max-w-3xl py-6 lg:py-10">
+        <Link
+          href="/blog"
+          className={cn(
+            buttonVariants({ variant: "ghost" }),
+            "absolute left-[-200px] top-14 hidden xl:inline-flex"
+          )}
+        >
           <LuChevronLeft /> See all posts
         </Link>
-      </div>
-    </article>
+        <div>
+          {post.date && (
+            <time
+              dateTime={post.date}
+              className="block text-sm text-muted-foreground"
+            >
+              Published on {formatDate(post.date)}
+            </time>
+          )}
+          <h1 className="mt-2 inline-block font-bold text-4xl leading-tight lg:text-5xl">
+            {post.title}
+          </h1>
+          {authors?.length ? (
+            <div className="mt-4 flex space-x-4">
+              {authors.map((author) =>
+                author ? (
+                  <Link
+                    key={author._id}
+                    href={`https://twitter.com/${author.twitter}`}
+                    className="flex items-center space-x-2 text-sm"
+                  >
+                    <Image
+                      src={author.avatar}
+                      alt={author.title}
+                      width={42}
+                      height={42}
+                      className="rounded-full bg-white"
+                    />
+                    <div className="flex-1 text-left leading-tight">
+                      <p className="font-medium">{author.title}</p>
+                      <p className="text-[12px] text-muted-foreground">
+                        @{author.twitter}
+                      </p>
+                    </div>
+                  </Link>
+                ) : null
+              )}
+            </div>
+          ) : null}
+        </div>
+        {post.image && (
+          <Image
+            src={post.image}
+            alt={post.title}
+            width={720}
+            height={405}
+            className="my-8 rounded-md border bg-muted transition-colors"
+            priority
+          />
+        )}
+        <Mdx code={post.body.code} />
+        <hr className="mt-12" />
+        <div className="flex justify-center py-6 lg:py-10">
+          <Link
+            href="/blog"
+            className={cn(buttonVariants({ variant: "ghost" }))}
+          >
+            <LuChevronLeft /> See all posts
+          </Link>
+        </div>
+      </article>
+    </>
   );
 }

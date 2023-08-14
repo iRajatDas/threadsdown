@@ -91,6 +91,9 @@ dependencies:
   next-contentlayer:
     specifier: ^0.3.3
     version: 0.3.4(contentlayer@0.3.4)(esbuild@0.18.2)(next@13.4.12)(react-dom@18.2.0)(react@18.2.0)
+  next-seo:
+    specifier: ^6.1.0
+    version: 6.1.0(next@13.4.12)(react-dom@18.2.0)(react@18.2.0)
   nextjs-cors:
     specifier: ^2.1.2
     version: 2.1.2(next@13.4.12)
@@ -1207,7 +1210,7 @@ packages:
     dependencies:
       '@mdx-js/mdx': 2.3.0
       esbuild: 0.18.2
-      node-fetch: 3.3.1
+      node-fetch: 3.3.2
       vfile: 5.3.7
     transitivePeerDependencies:
       - supports-color
@@ -5663,7 +5666,7 @@ packages:
   /isomorphic-unfetch@4.0.2:
     resolution: {integrity: sha512-1Yd+CF/7al18/N2BDbsLBcp6RO3tucSW+jcLq24dqdX5MNbCNTw1z4BsGsp4zNmjr/Izm2cs/cEqZPp4kvWSCA==}
     dependencies:
-      node-fetch: 3.3.1
+      node-fetch: 3.3.2
       unfetch: 5.0.0
     dev: false
 
@@ -6602,6 +6605,18 @@ packages:
       - supports-color
     dev: false
 
+  /next-seo@6.1.0(next@13.4.12)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-iMBpFoJsR5zWhguHJvsoBDxDSmdYTHtnVPB1ij+CD0NReQCP78ZxxbdL9qkKIf4oEuZEqZkrjAQLB0bkII7RYA==}
+    peerDependencies:
+      next: ^8.1.1-canary.54 || >=9.0.0
+      react: '>=16.0.0'
+      react-dom: '>=16.0.0'
+    dependencies:
+      next: 13.4.12(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
   /next@13.4.12(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-eHfnru9x6NRmTMcjQp6Nz0J4XH9OubmzOa7CkWL+AUrUxpibub3vWwttjduu9No16dug1kq04hiUUpo7J3m3Xw==}
     engines: {node: '>=16.8.0'}
@@ -6678,8 +6693,8 @@ packages:
     engines: {node: '>=10.5.0'}
     dev: false
 
-  /node-fetch@3.3.1:
-    resolution: {integrity: sha512-cRVc/kyto/7E5shrWca1Wsea4y6tL9iYJE5FBCius3JQfb/4P4I295PfhgbJQBLTx6lATE4z+wK0rPM4VS2uow==}
+  /node-fetch@3.3.2:
+    resolution: {integrity: sha512-dRB78srN/l6gqWulah9SrxeYnxeddIG30+GOqK/9OlLVyLg3HPnr6SqOWTWOXKRwC2eGYCkZ59NNuSgvSrpgOA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
       data-uri-to-buffer: 4.0.1
