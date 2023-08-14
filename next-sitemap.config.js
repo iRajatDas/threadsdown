@@ -1,5 +1,6 @@
-/** @type {import('next-sitemap').IConfig} */
+const { allPosts } = require("contentlayer/generated");
 
+/** @type {import('next-sitemap').IConfig} */
 module.exports = {
   siteUrl: process.env.NEXT_PUBLIC_APP_URL || "https://instathreadsdown.com",
   changefreq: "daily",
@@ -7,10 +8,23 @@ module.exports = {
   sitemapSize: 5000,
   generateRobotsTxt: true,
 
-  // Default transformation function
   transform: async (config, path) => {
+    // Check if the path matches a ContentLayer post slug
+    const matchedPost = allPosts.find((post) => post.slug === path);
+
+    if (matchedPost) {
+      return {
+        loc: path,
+        changefreq: config.changefreq,
+        priority: config.priority,
+        lastmod: matchedPost.date.toISOString(), // Use the actual date of the post
+        alternateRefs: config.alternateRefs ?? [],
+      };
+    }
+
+    // For other paths, use the default transformation
     return {
-      loc: path, // => this will be exported as http(s)://<config.siteUrl>/<path>
+      loc: path,
       changefreq: config.changefreq,
       priority: config.priority,
       lastmod: config.autoLastmod ? new Date().toISOString() : undefined,
@@ -18,7 +32,7 @@ module.exports = {
     };
   },
   additionalPaths: async (config) => [
-    // await config.transform(config, "/additional-page"),
+    // Add additional paths if needed
   ],
   robotsTxtOptions: {
     policies: [
