@@ -48,8 +48,14 @@ export async function generateMetadata({
   ogUrl.searchParams.set("mode", "dark");
 
   return {
+    metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL as string),
     title: post.title,
     description: post.description,
+
+    alternates: {
+      canonical: post.slug,
+    },
+
     authors: post.authors.map((author) => ({
       name: author,
     })),
@@ -57,7 +63,7 @@ export async function generateMetadata({
       title: post.title,
       description: post.description,
       type: "article",
-      url: absoluteUrl(post.slug),
+      url: post.slug,
       images: [
         {
           url: ogUrl.toString(),
