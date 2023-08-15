@@ -25,9 +25,11 @@ import {
 } from "@/components/ui/accordion";
 
 import { LuLoader } from "react-icons/lu";
+import axios, { HttpStatusCode } from "axios";
+import { useThreadFormStore } from "@/lib/store";
 
 const FormSchema = z.object({
-  bio: z
+  thread_url: z
     .string()
     .regex(
       /^https:\/\/www\.threads\.net\/t\/[a-zA-Z0-9]+$/,
@@ -36,20 +38,51 @@ const FormSchema = z.object({
 });
 
 export function QueryForm() {
+  const threads = useThreadFormStore((state) => state.threads);
+  const setThreads = useThreadFormStore((state) => state.setThreads);
+  const clearThreads = useThreadFormStore((state) => state.clearThreads);
+
+  console.log(threads)
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    await new Promise((resolve) => setTimeout(() => resolve(""), 3000));
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+    try {
+      toast({
+        title: "Proccessing your request.",
+        variant: "default",
+        description: "Please wait while we're getting things things ready.",
+        itemID: "t",
+      });
+      await new Promise((resolve) => setTimeout(() => resolve(""), 3000));
+      await axios.get(`/api/getThreads/?url=${data.thread_url}`).then((res) => {
+        if (res.status === HttpStatusCode.Ok) {
+          console.log(res.data);
+          setThreads(res.data);
+          toast({
+            title: "Ready to Download",
+            variant: "default",
+            description:
+              "Congrats! Click the Download Threads Button to get your video downloaded",
+            duration: 3000,
+          });
+          console.log(threads)
+        } else {
+          !threads.hasOwnProperty("containing_thread") && clearThreads();
+        }
+      });
+    } catch (error) {
+      !threads.hasOwnProperty("containing_thread") && clearThreads();
+      toast({
+        title: "Opps!!",
+        description: "We are looking into what's went wrong.",
+        variant: "destructive",
+        duration: 5000,
+      });
+      // console.log("Nope");
+    }
   };
 
   return (
@@ -57,7 +90,7 @@ export function QueryForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={form.control}
-          name="bio"
+          name="thread_url"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-lg">Enter URL</FormLabel>
