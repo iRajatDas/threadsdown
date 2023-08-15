@@ -10,7 +10,7 @@ import Image from "next/image";
 import { cn, formatDate } from "@/lib/utils";
 import Link from "next/link";
 import { allPosts } from "contentlayer/generated";
-import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
+import { LuChevronRight } from "react-icons/lu";
 import { buttonVariants } from "@/components/ui/button";
 import { Metadata } from "next";
 

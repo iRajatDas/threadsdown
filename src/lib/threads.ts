@@ -156,4 +156,4 @@ const getAllMedia = async (url: string): Promise<Media[]> => {
   return allMedia;
 };
 
-export { getAllMedia };
+export { getAllMedia, getMedia };
