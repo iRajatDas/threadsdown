@@ -1,6 +1,6 @@
 // "use client";
 // import { Button } from "@/components/ui/button";
-import { getPostData } from "@/lib/threads";
+// import { getPostData } from "@/lib/threads";
 
 const EntrySection = () => {
   // const handleDownload = async () => {

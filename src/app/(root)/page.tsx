@@ -13,6 +13,7 @@ import { allPosts } from "contentlayer/generated";
 import { LuChevronRight } from "react-icons/lu";
 import { buttonVariants } from "@/components/ui/button";
 import { Metadata } from "next";
+import ThreadsSection from "./components/section-threads";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL as string),
@@ -32,6 +33,7 @@ const Homepage = async () => {
     <>
       <EntrySection />
       <FormSection />
+      <ThreadsSection />
       <AlertSection />
       <FAQSection />
       <div className="px-default py-4 mt-10 space-y-4">

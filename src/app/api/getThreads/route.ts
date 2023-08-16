@@ -2,8 +2,8 @@ import { ThreadsAPI } from "threads-api";
 
 const threadsAPI = new ThreadsAPI({
   deviceID: "android-2vhi2rsxehy00000",
-  // username: "rajatdas.me",
-  // password: "rajatdas@123#S$"
+  username: "rajatdas.me",
+  password: "rajatdas@123#S$"
 });
 
 async function getPostId(ThreadId: string) {
@@ -101,7 +101,7 @@ export async function GET(request: Request) {
     }
   });
 
-  return new Response(JSON.stringify(data), {
+  return new Response(JSON.stringify(media), {
     status: 200,
     headers: {
       "Access-Control-Allow-Origin": origin,
