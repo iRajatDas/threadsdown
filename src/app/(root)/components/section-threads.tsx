@@ -38,7 +38,7 @@ const items = [
     src: "https://images.unsplash.com/photo-1614644147798-f8c0fc9da7f6?ixlib=rb-1.2.1&w=128&h=128&dpr=2&q=80",
 
     video:
-      "http://localhost:3001/scontent.cdninstagram.com/v/t50.2886-16/10000000_978374769947694_1099918139477963337_n.mp4?_nc_ht=scontent.cdninstagram.com&_nc_cat=106&_nc_ohc=DHz7TCxOuFgAX8HtNfZ&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfD06QOeKSap-NSwBqip98pw_0dnk2rSN1psEtKiNc3VdQ&oe=64DE6290&_nc_sid=10d13b",
+      "https://threads-3g3x.onrender.com/scontent.cdninstagram.com/v/t50.2886-16/10000000_978374769947694_1099918139477963337_n.mp4?_nc_ht=scontent.cdninstagram.com&_nc_cat=106&_nc_ohc=DHz7TCxOuFgAX8HtNfZ&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfD06QOeKSap-NSwBqip98pw_0dnk2rSN1psEtKiNc3VdQ&oe=64DE6290&_nc_sid=10d13b",
   },
 ];
 
@@ -173,7 +173,7 @@ const Post = ({
         alt="rajatdas.me's profile picture"
         className="object-cover origin-center rounded-full"
         crossOrigin="anonymous"
-        src="http://localhost:3001/scontent.cdninstagram.com/v/t51.2885-19/357834101_977883033280721_3449271728947456340_n.jpg?stp=dst-jpg_s150x150&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=105&amp;_nc_ohc=TIsz2OnSVLkAX-hiUTe&amp;edm=APs17CUBAAAA&amp;ccb=7-5&amp;oh=00_AfDfK8lfnAcHfe9DyZUm408kHnUDhxflp6x7feupohlBwg&amp;oe=64E1B1A2&amp;_nc_sid=10d13b"
+        src="https://scontent.cdninstagram.com/v/t51.2885-19/357834101_977883033280721_3449271728947456340_n.jpg?stp=dst-jpg_s150x150&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=105&amp;_nc_ohc=TIsz2OnSVLkAX-hiUTe&amp;edm=APs17CUBAAAA&amp;ccb=7-5&amp;oh=00_AfDfK8lfnAcHfe9DyZUm408kHnUDhxflp6x7feupohlBwg&amp;oe=64E1B1A2&amp;_nc_sid=10d13b"
       />
     </div>
     <div className="flex flex-col flex-1">

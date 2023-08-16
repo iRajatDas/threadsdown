@@ -8,6 +8,7 @@ const nextConfig = {
       "avatars.githubusercontent.com",
       "localhost",
       "images.unsplash.com",
+      "threads-3g3x.onrender.com",
       "scontent.cdninstagram.com",
     ],
   },
