@@ -2,16 +2,10 @@
 
 import { ReactNode, Suspense } from "react";
 import { useThreadFormStore } from "@/lib/store";
-import {
-  HiOutlineHeart,
-  HiArrowUpTray,
-  HiOutlineChatBubbleOvalLeft,
-  HiOutlineArrowPath,
-  HiOutlineChartBarSquare,
-} from "react-icons/hi2";
 import { LuLoader } from "react-icons/lu";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 const items = [
   {
@@ -33,7 +27,18 @@ const items = [
     src: "https://images.unsplash.com/photo-1614644147798-f8c0fc9da7f6?ixlib=rb-1.2.1&w=128&h=128&dpr=2&q=80",
 
     image:
-      "https://images.unsplash.com/photo-1635776062127-d379bfcba9f8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2532&q=80",
+      "https://images.unsplash.com/photo-1692013170163-96ca39a02e8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=988&q=80",
+  },
+  {
+    username: "rajatdas.me",
+    content: "CSS is insane",
+    caption:
+      "Should designers code. Should you rename your Figma layers is the 1 billion…",
+    date: "3h",
+    src: "https://images.unsplash.com/photo-1614644147798-f8c0fc9da7f6?ixlib=rb-1.2.1&w=128&h=128&dpr=2&q=80",
+
+    video:
+      "http://localhost:3001/scontent.cdninstagram.com/v/t50.2886-16/10000000_978374769947694_1099918139477963337_n.mp4?_nc_ht=scontent.cdninstagram.com&_nc_cat=106&_nc_ohc=DHz7TCxOuFgAX8HtNfZ&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfD06QOeKSap-NSwBqip98pw_0dnk2rSN1psEtKiNc3VdQ&oe=64DE6290&_nc_sid=10d13b",
   },
 ];
 
@@ -47,30 +52,47 @@ const ThreadsSection = () => {
       </h2> */}
       <Suspense fallback={<LuLoader className="animate-spin" />}>
         <div className="[&_p:last-child]:text-slate-500 [&_p:first-child]:text-lg divide-y divide-barcelona-media-outline">
-          {items.map(({ username, content, date, src, image, caption }, i) => (
-            <article key={`username-${i}`} className="p-4- py-6">
-              <Post
-                username={username}
-                content={content}
-                date={date}
-                src={src}
-                caption={caption}
-                onClick={() => console.log(image)}
-              >
-                <div className="w-full relative -z-10 min-h-{20rem} h-auto mb-4">
-                  <Image
-                    // fill={true}
-                    width={800}
-                    height={800}
-                    style={{ objectFit: "cover" }}
-                    className="rounded-3xl"
-                    src={image}
-                    alt="Gradient"
-                  />
-                </div>
-              </Post>
-            </article>
-          ))}
+          {items.map(
+            ({ username, content, date, src, image, caption, video }, i) => (
+              <article key={`username-${i}`} className="p-4- py-6">
+                <Post
+                  username={username}
+                  content={content}
+                  date={date}
+                  src={src}
+                  caption={caption}
+                  onClick={() => console.log(image)}
+                >
+                  <div
+                    className={cn(
+                      "w-full relative min-h-{20rem} h-auto mb-4",
+                      image ? "z-10" : ""
+                    )}
+                  >
+                    {image ? (
+                      <Image
+                        // fill={true}
+                        width={800}
+                        height={800}
+                        style={{ objectFit: "cover" }}
+                        className="rounded-3xl"
+                        src={image}
+                        alt="Gradient"
+                      />
+                    ) : (
+                      <video
+                        playsInline={true}
+                        controls
+                        src={video}
+                        crossOrigin="anonymous"
+                        className="rounded-3xl"
+                      ></video>
+                    )}
+                  </div>
+                </Post>
+              </article>
+            )
+          )}
         </div>
       </Suspense>
       {/* <ThreadPost /> */}
@@ -157,7 +179,9 @@ const Post = ({
         </div>
         <div className="">{/* <DropdownMenuDemo /> */}</div>
       </div>
-      <div className="text-muted-foreground text-base md:py-2 mb-4">{caption}</div>
+      <div className="text-muted-foreground text-base md:py-2 mb-4">
+        {caption}
+      </div>
       {children}
       <div>
         <div className="flex gap-x-10 xl:gap-x-14 text-base text-slate-100 [&_li:first-child]:hidden [&_li:first-child]:lg:flex [&_li]:flex [&_li]:items-center [&_li]:gap-x-2 [&_li:xl]:gap-x-3 ">

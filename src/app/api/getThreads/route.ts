@@ -2,8 +2,8 @@ import { ThreadsAPI } from "threads-api";
 
 const threadsAPI = new ThreadsAPI({
   deviceID: "android-2vhi2rsxehy00000",
-  username: "rajatdas.me",
-  password: "rajatdas@123#S$"
+  // username: "rajatdas.me",
+  // password: "rajatdas@123#S$"
 });
 
 async function getPostId(ThreadId: string) {
