@@ -61,7 +61,7 @@ const ThreadsSection = () => {
                   date={date}
                   src={src}
                   caption={caption}
-                  onClick={() => console.log(image)}
+                  onClick={() => console.log(image || video)}
                 >
                   <div
                     className={cn(
@@ -81,12 +81,17 @@ const ThreadsSection = () => {
                       />
                     ) : (
                       <video
-                        playsInline={true}
-                        controls
-                        src={video}
+                        // playsInline={true}
+                        loop
+                        muted
+                        autoPlay
+                        playsInline
+                        preload="metadata"
                         crossOrigin="anonymous"
                         className="rounded-3xl"
-                      ></video>
+                      >
+                        <source src={video} type="video/mp4" />
+                      </video>
                     )}
                   </div>
                 </Post>
