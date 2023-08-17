@@ -38,7 +38,7 @@ const items = [
     src: "https://images.unsplash.com/photo-1614644147798-f8c0fc9da7f6?ixlib=rb-1.2.1&w=128&h=128&dpr=2&q=80",
 
     video:
-      "https://threads-3g3x.onrender.com/scontent.cdninstagram.com/v/t50.2886-16/10000000_978374769947694_1099918139477963337_n.mp4?_nc_ht=scontent.cdninstagram.com&_nc_cat=106&_nc_ohc=DHz7TCxOuFgAX8HtNfZ&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfD06QOeKSap-NSwBqip98pw_0dnk2rSN1psEtKiNc3VdQ&oe=64DE6290&_nc_sid=10d13b",
+      "https://scontent.cdninstagram.com/v/t50.2886-16/10000000_978374769947694_1099918139477963337_n.mp4?_nc_ht=scontent.cdninstagram.com&_nc_cat=106&_nc_ohc=DHz7TCxOuFgAX8HtNfZ&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfD06QOeKSap-NSwBqip98pw_0dnk2rSN1psEtKiNc3VdQ&oe=64DE6290&_nc_sid=10d13b",
   },
 ];
 
@@ -90,7 +90,12 @@ const ThreadsSection = () => {
                         crossOrigin="anonymous"
                         className="rounded-3xl"
                       >
-                        <source src={video} type="video/mp4" />
+                        <source
+                          src={`${
+                            process.env.NEXT_PUBLIC_APP_CDN
+                          }/${encodeURIComponent(video!!)}`}
+                          type="video/mp4"
+                        />
                       </video>
                     )}
                   </div>
