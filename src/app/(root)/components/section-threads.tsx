@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import axios from "axios";
+import { useThreadFormStore } from "@/lib/store";
 
 const fetchThreadsData = async (url: string) => {
   try {
@@ -20,13 +21,12 @@ const ThreadsSection = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  const threads = useThreadFormStore((state) => state.threads);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetchThreadsData(
-          "/api/getThreads?url=https://www.threads.net/@rajatdas.me/post/CwIY_Ospfn3"
-        );
-        setMediaData(response);
+        setMediaData(threads);
         setLoading(false);
       } catch (err) {
         setError("Error fetching data");
@@ -35,9 +35,9 @@ const ThreadsSection = () => {
     };
 
     fetchData();
-  }, []);
+  }, [threads]);
 
-  // console.log(mediaData);
+  console.log(mediaData);
 
   return (
     <div className="px-default py-4 --mt-10 space-y-4">
@@ -46,222 +46,224 @@ const ThreadsSection = () => {
       </h2> */}
       <Suspense fallback={<LuLoader className="animate-spin" />}>
         <div className="[&_p:last-child]:text-slate-500 [&_p:first-child]:text-lg divide-y divide-barcelona-media-outline">
-          {mediaData?.media.map(
-            (
-              {
-                user,
-                type,
-                media,
-                width,
-                height,
-                caption,
-                has_audio,
-                taken_at,
-                thumbnail,
-              },
-              i
-            ) => (
-              <article key={`username-${i}`} className="p-4- py-6">
-                {type === "video" ? (
-                  <Post
-                    caption={caption}
-                    username={user.username}
-                    date="1h"
-                    content="Hello"
-                    src={user.profile_pic_url}
-                  >
-                    <div
-                      className={cn(
-                        "w-full relative min-h-{20rem} h-auto mb-4",
-                        thumbnail ? "z-10" : ""
-                      )}
-                    >
-                      <video
-                        loop
-                        muted
-                        autoPlay
-                        playsInline
-                        preload="metadata"
-                        crossOrigin="anonymous"
-                        className="rounded-3xl"
+          {mediaData?.length !== 0
+            ? mediaData?.media.map(
+                (
+                  {
+                    user,
+                    type,
+                    media,
+                    width,
+                    height,
+                    caption,
+                    has_audio,
+                    taken_at,
+                    thumbnail,
+                  },
+                  i
+                ) => (
+                  <article key={`username-${i}`} className="p-4- py-6">
+                    {type === "video" ? (
+                      <Post
+                        caption={caption}
+                        username={user.username}
+                        date="1h"
+                        content="Hello"
+                        src={user.profile_pic_url}
                       >
-                        <source
-                          src={`${
-                            process.env.NEXT_PUBLIC_APP_CDN
-                          }/${encodeURIComponent(media[0].url)}`}
-                          type="video/mp4"
-                        />
-                      </video>
-                    </div>
-                  </Post>
-                ) : type === "photo" ? (
-                  <Post
-                    caption={caption}
-                    username={user.username}
-                    date="1h"
-                    content="Hello"
-                    src={user.profile_pic_url}
-                  >
-                    <div
-                      className={cn(
-                        "w-full relative min-h-{20rem} h-auto mb-4",
-                        thumbnail ? "z-10" : ""
-                      )}
-                    >
-                      <Image
-                        width={800}
-                        height={800}
-                        style={{ objectFit: "cover" }}
-                        className="rounded-3xl"
-                        src={media[0].url}
-                        alt="Image"
-                      />
-                    </div>
-                  </Post>
-                ) : type === "photos_and_videos" ? (
-                  // n
-                  <div className="space-y-6">
-                    {/* {<pre>{JSON.stringify(media)}</pre>} */}
-                    {media.videos && media.videos.length > 0
-                      ? media.videos.map((video, i) => (
-                          <Post
-                            key={i}
-                            caption={caption}
-                            username={user.username}
-                            date="1h"
-                            content="Hello"
-                            src={user.profile_pic_url}
-                          >
-                            <div
-                              className={cn(
-                                "w-full relative min-h-{20rem} h-auto mb-4",
-                                thumbnail ? "z-10" : ""
-                              )}
-                            >
-                              <video
-                                loop
-                                muted
-                                autoPlay
-                                playsInline
-                                preload="metadata"
-                                crossOrigin="anonymous"
-                                className="rounded-3xl"
-                              >
-                                <source
-                                  src={`${
-                                    process.env.NEXT_PUBLIC_APP_CDN
-                                  }/${encodeURIComponent(video.url)}`}
-                                  type="video/mp4"
-                                />
-                              </video>
-                            </div>
-                          </Post>
-                        ))
-                      : null}
-                    {media.photos &&
-                      media.photos.map((photo, i) => (
-                        <Post
-                          key={i}
-                          caption={caption}
-                          username={user.username}
-                          date="1h"
-                          content="Hello"
-                          src={user.profile_pic_url}
+                        <div
+                          className={cn(
+                            "w-full relative min-h-{20rem} h-auto mb-4",
+                            thumbnail ? "z-10" : ""
+                          )}
                         >
-                          <div
-                            className={cn(
-                              "w-full relative min-h-{20rem} h-auto mb-4",
-                              thumbnail ? "z-10" : ""
-                            )}
+                          <video
+                            loop
+                            muted
+                            autoPlay
+                            playsInline
+                            preload="metadata"
+                            crossOrigin="anonymous"
+                            className="rounded-3xl"
                           >
-                            <Image
-                              width={800}
-                              height={800}
-                              style={{ objectFit: "cover" }}
-                              className="rounded-3xl"
-                              src={photo.url}
-                              alt="Image"
+                            <source
+                              src={`${
+                                process.env.NEXT_PUBLIC_APP_CDN
+                              }/${encodeURIComponent(media[0].url)}`}
+                              type="video/mp4"
                             />
-                          </div>
-                        </Post>
-                      ))}
-                  </div>
-                ) : // n
-                type === "videos" ? (
-                  <div className="space-y-6">
-                    {media && media.length > 0
-                      ? media.map((video) => (
-                          <Post
-                            key={video}
-                            caption={caption}
-                            username={user.username}
-                            date="1h"
-                            content="Hello"
-                            src={user.profile_pic_url}
-                          >
-                            <div
-                              className={cn(
-                                "w-full relative min-h-{20rem} h-auto mb-4",
-                                thumbnail ? "z-10" : ""
-                              )}
-                            >
-                              <video
-                                loop
-                                muted
-                                autoPlay
-                                playsInline
-                                preload="metadata"
-                                crossOrigin="anonymous"
-                                className="rounded-3xl"
+                          </video>
+                        </div>
+                      </Post>
+                    ) : type === "photo" ? (
+                      <Post
+                        caption={caption}
+                        username={user.username}
+                        date="1h"
+                        content="Hello"
+                        src={user.profile_pic_url}
+                      >
+                        <div
+                          className={cn(
+                            "w-full relative min-h-{20rem} h-auto mb-4",
+                            thumbnail ? "z-10" : ""
+                          )}
+                        >
+                          <Image
+                            width={800}
+                            height={800}
+                            style={{ objectFit: "cover" }}
+                            className="rounded-3xl"
+                            src={media[0].url}
+                            alt="Image"
+                          />
+                        </div>
+                      </Post>
+                    ) : type === "photos_and_videos" ? (
+                      // n
+                      <div className="space-y-6">
+                        {/* {<pre>{JSON.stringify(media)}</pre>} */}
+                        {media.videos && media.videos.length > 0
+                          ? media.videos.map((video, i) => (
+                              <Post
+                                key={i}
+                                caption={caption}
+                                username={user.username}
+                                date="1h"
+                                content="Hello"
+                                src={user.profile_pic_url}
                               >
-                                <source
-                                  src={`${
-                                    process.env.NEXT_PUBLIC_APP_CDN
-                                  }/${encodeURIComponent(video.url)}`}
-                                  type="video/mp4"
-                                />
-                              </video>
-                            </div>
-                          </Post>
-                        ))
-                      : null}
-                  </div>
-                ) : type === "photos" ? (
-                  <div className="space-y-6">
-                    {media && media.length > 0
-                      ? media.map((photo) => (
-                          <Post
-                            key={photo}
-                            caption={caption}
-                            username={user.username}
-                            date="1h"
-                            content="Hello"
-                            src={user.profile_pic_url}
-                          >
-                            <div
-                              className={cn(
-                                "w-full relative min-h-{20rem} h-auto mb-4",
-                                thumbnail ? "z-10" : ""
-                              )}
+                                <div
+                                  className={cn(
+                                    "w-full relative min-h-{20rem} h-auto mb-4",
+                                    thumbnail ? "z-10" : ""
+                                  )}
+                                >
+                                  <video
+                                    loop
+                                    muted
+                                    autoPlay
+                                    playsInline
+                                    preload="metadata"
+                                    crossOrigin="anonymous"
+                                    className="rounded-3xl"
+                                  >
+                                    <source
+                                      src={`${
+                                        process.env.NEXT_PUBLIC_APP_CDN
+                                      }/${encodeURIComponent(video.url)}`}
+                                      type="video/mp4"
+                                    />
+                                  </video>
+                                </div>
+                              </Post>
+                            ))
+                          : null}
+                        {media.photos &&
+                          media.photos.map((photo, i) => (
+                            <Post
+                              key={i}
+                              caption={caption}
+                              username={user.username}
+                              date="1h"
+                              content="Hello"
+                              src={user.profile_pic_url}
                             >
-                              <Image
-                                width={800}
-                                height={800}
-                                style={{ objectFit: "cover" }}
-                                className="rounded-3xl"
-                                src={photo.url}
-                                alt="Image"
-                              />
-                            </div>
-                          </Post>
-                        ))
-                      : null}
-                  </div>
-                ) : // unknown
-                null}
-              </article>
-            )
-          )}
+                              <div
+                                className={cn(
+                                  "w-full relative min-h-{20rem} h-auto mb-4",
+                                  thumbnail ? "z-10" : ""
+                                )}
+                              >
+                                <Image
+                                  width={800}
+                                  height={800}
+                                  style={{ objectFit: "cover" }}
+                                  className="rounded-3xl"
+                                  src={photo.url}
+                                  alt="Image"
+                                />
+                              </div>
+                            </Post>
+                          ))}
+                      </div>
+                    ) : // n
+                    type === "videos" ? (
+                      <div className="space-y-6">
+                        {media && media.length > 0
+                          ? media.map((video) => (
+                              <Post
+                                key={video}
+                                caption={caption}
+                                username={user.username}
+                                date="1h"
+                                content="Hello"
+                                src={user.profile_pic_url}
+                              >
+                                <div
+                                  className={cn(
+                                    "w-full relative min-h-{20rem} h-auto mb-4",
+                                    thumbnail ? "z-10" : ""
+                                  )}
+                                >
+                                  <video
+                                    loop
+                                    muted
+                                    autoPlay
+                                    playsInline
+                                    preload="metadata"
+                                    crossOrigin="anonymous"
+                                    className="rounded-3xl"
+                                  >
+                                    <source
+                                      src={`${
+                                        process.env.NEXT_PUBLIC_APP_CDN
+                                      }/${encodeURIComponent(video.url)}`}
+                                      type="video/mp4"
+                                    />
+                                  </video>
+                                </div>
+                              </Post>
+                            ))
+                          : null}
+                      </div>
+                    ) : type === "photos" ? (
+                      <div className="space-y-6">
+                        {media && media.length > 0
+                          ? media.map((photo) => (
+                              <Post
+                                key={photo}
+                                caption={caption}
+                                username={user.username}
+                                date="1h"
+                                content="Hello"
+                                src={user.profile_pic_url}
+                              >
+                                <div
+                                  className={cn(
+                                    "w-full relative min-h-{20rem} h-auto mb-4",
+                                    thumbnail ? "z-10" : ""
+                                  )}
+                                >
+                                  <Image
+                                    width={800}
+                                    height={800}
+                                    style={{ objectFit: "cover" }}
+                                    className="rounded-3xl"
+                                    src={photo.url}
+                                    alt="Image"
+                                  />
+                                </div>
+                              </Post>
+                            ))
+                          : null}
+                      </div>
+                    ) : // unknown
+                    null}
+                  </article>
+                )
+              )
+            : null}
         </div>
       </Suspense>
     </div>

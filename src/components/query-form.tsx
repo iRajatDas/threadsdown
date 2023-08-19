@@ -32,17 +32,16 @@ const FormSchema = z.object({
   thread_url: z
     .string()
     .regex(
-      /^https:\/\/www\.threads\.net\/t\/[a-zA-Z0-9]+$/,
+      /^https:\/\/www\.threads\.net\/(@[a-zA-Z0-9]+\.)?t\/[a-zA-Z0-9-_]+$/,
       "Please enter a valid Threads Post link"
     ),
 });
+
 
 export function QueryForm() {
   const threads = useThreadFormStore((state) => state.threads);
   const setThreads = useThreadFormStore((state) => state.setThreads);
   const clearThreads = useThreadFormStore((state) => state.clearThreads);
-
-  console.log(threads)
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
