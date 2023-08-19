@@ -1,31 +1,32 @@
 "use client";
 
 import { ReactNode, Suspense, useEffect, useState } from "react";
-import { useThreadFormStore } from "@/lib/store";
 import { LuLoader } from "react-icons/lu";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import axios from "axios";
 
+const fetchThreadsData = async (url: string) => {
+  try {
+    const response = await axios.get(url);
+    return response.data;
+  } catch (err) {
+    throw new Error("Error fetching data::");
+  }
+};
 const ThreadsSection = () => {
-  const threads = useThreadFormStore((state) => state.threads);
-
-  const [mediaData, setMediaData] = useState<ThreadResponse | null>(null);
+  const [mediaData, setMediaData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get<ThreadResponse>(
-          "http://localhost:3000/api/getThreads?url=https://www.threads.net/@rajatdas.me/post/CwEfKYkJO54" // photos and videos
-          // "http://localhost:3000/api/getThreads?url=https://www.threads.net/@rajatdas.me/post/CwC8QYkye7b" // multi photo
-          // "http://localhost:3000/api/getThreads?url=https://www.threads.net/@rajatdas.me/post/CugT0dVpUCK" // multi video
-          // "http://localhost:3000/api/getThreads?url=https://www.threads.net/@rajatdas.me/post/Cv9pDcKy7UY" // single photo
-          // "http://localhost:3000/api/getThreads?url=https://www.threads.net/@rajatdas.me/post/Cv1dd8nJnWs" // single video
+        const response = await fetchThreadsData(
+          "/api/getThreads?url=https://www.threads.net/@rajatdas.me/post/CwIY_Ospfn3"
         );
-        setMediaData(response.data);
+        setMediaData(response);
         setLoading(false);
       } catch (err) {
         setError("Error fetching data");
@@ -36,7 +37,7 @@ const ThreadsSection = () => {
     fetchData();
   }, []);
 
-  console.log(mediaData);
+  // console.log(mediaData);
 
   return (
     <div className="px-default py-4 --mt-10 space-y-4">
@@ -119,11 +120,12 @@ const ThreadsSection = () => {
                   </Post>
                 ) : type === "photos_and_videos" ? (
                   // n
-                  <div>
-                    {media.photos && media.videos.length > 0
-                      ? media.map((video) => (
+                  <div className="space-y-6">
+                    {/* {<pre>{JSON.stringify(media)}</pre>} */}
+                    {media.videos && media.videos.length > 0
+                      ? media.videos.map((video, i) => (
                           <Post
-                            key={video}
+                            key={i}
                             caption={caption}
                             username={user.username}
                             date="1h"
@@ -156,6 +158,33 @@ const ThreadsSection = () => {
                           </Post>
                         ))
                       : null}
+                    {media.photos &&
+                      media.photos.map((photo, i) => (
+                        <Post
+                          key={i}
+                          caption={caption}
+                          username={user.username}
+                          date="1h"
+                          content="Hello"
+                          src={user.profile_pic_url}
+                        >
+                          <div
+                            className={cn(
+                              "w-full relative min-h-{20rem} h-auto mb-4",
+                              thumbnail ? "z-10" : ""
+                            )}
+                          >
+                            <Image
+                              width={800}
+                              height={800}
+                              style={{ objectFit: "cover" }}
+                              className="rounded-3xl"
+                              src={photo.url}
+                              alt="Image"
+                            />
+                          </div>
+                        </Post>
+                      ))}
                   </div>
                 ) : // n
                 type === "videos" ? (
