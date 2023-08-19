@@ -65,7 +65,7 @@ export const getAllMedia = async (url: string): Promise<any> => {
       }
     }
 
-    return { media: allMedia };
+    return { media: allMedia,postData };
   } catch (err) {
     console.log(err);
     return { msg: "unknown error", error: err };
@@ -118,10 +118,20 @@ const getMedia = (thread) => {
       };
     }
 
+     const photos_ = media.carousel_media
+       .filter((item) => {
+         return (
+           item.image_versions2 &&
+           item.image_versions2.candidates.length > 0 &&
+           item.video_versions.length === 0
+         );
+       })
+       .map((item) => item.image_versions2.candidates[0].url);
+
     return {
       user: media.user,
       type: "photos_and_videos",
-      media: { photos, videos },
+      media: { photos_, videos },
       width: media.original_width,
       height: media.original_height,
       caption: media.caption ? media.caption.text : "",

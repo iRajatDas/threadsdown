@@ -1,49 +1,42 @@
 "use client";
 
-import { ReactNode, Suspense } from "react";
+import { ReactNode, Suspense, useEffect, useState } from "react";
 import { useThreadFormStore } from "@/lib/store";
 import { LuLoader } from "react-icons/lu";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-
-const items = [
-  {
-    username: "rajatdas.me",
-    content: "Design and build templates",
-    caption:
-      "Improve your design skills by making projects. 1 every week, practice with me on Youtube. I use Figma, Tailwind CSS and Webflow.",
-    date: "1h",
-    src: "https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-1.2.1&w=128&h=128&dpr=2&q=80",
-    image:
-      "https://images.unsplash.com/photo-1635776062127-d379bfcba9f8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2532&q=80",
-  },
-  {
-    username: "rajatdas.me",
-    content: "CSS is insane",
-    caption:
-      "Should designers code. Should you rename your Figma layers is the 1 billion…",
-    date: "3h",
-    src: "https://images.unsplash.com/photo-1614644147798-f8c0fc9da7f6?ixlib=rb-1.2.1&w=128&h=128&dpr=2&q=80",
-
-    image:
-      "https://images.unsplash.com/photo-1692013170163-96ca39a02e8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=988&q=80",
-  },
-  {
-    username: "rajatdas.me",
-    content: "CSS is insane",
-    caption:
-      "Should designers code. Should you rename your Figma layers is the 1 billion…",
-    date: "3h",
-    src: "https://images.unsplash.com/photo-1614644147798-f8c0fc9da7f6?ixlib=rb-1.2.1&w=128&h=128&dpr=2&q=80",
-
-    video:
-      "https://scontent.cdninstagram.com/v/t50.2886-16/10000000_978374769947694_1099918139477963337_n.mp4?_nc_ht=scontent.cdninstagram.com&_nc_cat=106&_nc_ohc=DHz7TCxOuFgAX8HtNfZ&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfD06QOeKSap-NSwBqip98pw_0dnk2rSN1psEtKiNc3VdQ&oe=64DE6290&_nc_sid=10d13b",
-  },
-];
+import axios from "axios";
 
 const ThreadsSection = () => {
   const threads = useThreadFormStore((state) => state.threads);
+
+  const [mediaData, setMediaData] = useState<ThreadResponse | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get<ThreadResponse>(
+          "http://localhost:3000/api/getThreads?url=https://www.threads.net/@rajatdas.me/post/CwEfKYkJO54" // photos and videos
+          // "http://localhost:3000/api/getThreads?url=https://www.threads.net/@rajatdas.me/post/CwC8QYkye7b" // multi photo
+          // "http://localhost:3000/api/getThreads?url=https://www.threads.net/@rajatdas.me/post/CugT0dVpUCK" // multi video
+          // "http://localhost:3000/api/getThreads?url=https://www.threads.net/@rajatdas.me/post/Cv9pDcKy7UY" // single photo
+          // "http://localhost:3000/api/getThreads?url=https://www.threads.net/@rajatdas.me/post/Cv1dd8nJnWs" // single video
+        );
+        setMediaData(response.data);
+        setLoading(false);
+      } catch (err) {
+        setError("Error fetching data");
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  console.log(mediaData);
 
   return (
     <div className="px-default py-4 --mt-10 space-y-4">
@@ -52,36 +45,37 @@ const ThreadsSection = () => {
       </h2> */}
       <Suspense fallback={<LuLoader className="animate-spin" />}>
         <div className="[&_p:last-child]:text-slate-500 [&_p:first-child]:text-lg divide-y divide-barcelona-media-outline">
-          {items.map(
-            ({ username, content, date, src, image, caption, video }, i) => (
+          {mediaData?.media.map(
+            (
+              {
+                user,
+                type,
+                media,
+                width,
+                height,
+                caption,
+                has_audio,
+                taken_at,
+                thumbnail,
+              },
+              i
+            ) => (
               <article key={`username-${i}`} className="p-4- py-6">
-                <Post
-                  username={username}
-                  content={content}
-                  date={date}
-                  src={src}
-                  caption={caption}
-                  onClick={() => console.log(image || video)}
-                >
-                  <div
-                    className={cn(
-                      "w-full relative min-h-{20rem} h-auto mb-4",
-                      image ? "z-10" : ""
-                    )}
+                {type === "video" ? (
+                  <Post
+                    caption={caption}
+                    username={user.username}
+                    date="1h"
+                    content="Hello"
+                    src={user.profile_pic_url}
                   >
-                    {image ? (
-                      <Image
-                        // fill={true}
-                        width={800}
-                        height={800}
-                        style={{ objectFit: "cover" }}
-                        className="rounded-3xl"
-                        src={image}
-                        alt="Gradient"
-                      />
-                    ) : (
+                    <div
+                      className={cn(
+                        "w-full relative min-h-{20rem} h-auto mb-4",
+                        thumbnail ? "z-10" : ""
+                      )}
+                    >
                       <video
-                        // playsInline={true}
                         loop
                         muted
                         autoPlay
@@ -93,57 +87,154 @@ const ThreadsSection = () => {
                         <source
                           src={`${
                             process.env.NEXT_PUBLIC_APP_CDN
-                          }/${encodeURIComponent(video!!)}`}
+                          }/${encodeURIComponent(media[0].url)}`}
                           type="video/mp4"
                         />
                       </video>
-                    )}
+                    </div>
+                  </Post>
+                ) : type === "photo" ? (
+                  <Post
+                    caption={caption}
+                    username={user.username}
+                    date="1h"
+                    content="Hello"
+                    src={user.profile_pic_url}
+                  >
+                    <div
+                      className={cn(
+                        "w-full relative min-h-{20rem} h-auto mb-4",
+                        thumbnail ? "z-10" : ""
+                      )}
+                    >
+                      <Image
+                        width={800}
+                        height={800}
+                        style={{ objectFit: "cover" }}
+                        className="rounded-3xl"
+                        src={media[0].url}
+                        alt="Image"
+                      />
+                    </div>
+                  </Post>
+                ) : type === "photos_and_videos" ? (
+                  // n
+                  <div>
+                    {media.photos && media.videos.length > 0
+                      ? media.map((video) => (
+                          <Post
+                            key={video}
+                            caption={caption}
+                            username={user.username}
+                            date="1h"
+                            content="Hello"
+                            src={user.profile_pic_url}
+                          >
+                            <div
+                              className={cn(
+                                "w-full relative min-h-{20rem} h-auto mb-4",
+                                thumbnail ? "z-10" : ""
+                              )}
+                            >
+                              <video
+                                loop
+                                muted
+                                autoPlay
+                                playsInline
+                                preload="metadata"
+                                crossOrigin="anonymous"
+                                className="rounded-3xl"
+                              >
+                                <source
+                                  src={`${
+                                    process.env.NEXT_PUBLIC_APP_CDN
+                                  }/${encodeURIComponent(video.url)}`}
+                                  type="video/mp4"
+                                />
+                              </video>
+                            </div>
+                          </Post>
+                        ))
+                      : null}
                   </div>
-                </Post>
+                ) : // n
+                type === "videos" ? (
+                  <div className="space-y-6">
+                    {media && media.length > 0
+                      ? media.map((video) => (
+                          <Post
+                            key={video}
+                            caption={caption}
+                            username={user.username}
+                            date="1h"
+                            content="Hello"
+                            src={user.profile_pic_url}
+                          >
+                            <div
+                              className={cn(
+                                "w-full relative min-h-{20rem} h-auto mb-4",
+                                thumbnail ? "z-10" : ""
+                              )}
+                            >
+                              <video
+                                loop
+                                muted
+                                autoPlay
+                                playsInline
+                                preload="metadata"
+                                crossOrigin="anonymous"
+                                className="rounded-3xl"
+                              >
+                                <source
+                                  src={`${
+                                    process.env.NEXT_PUBLIC_APP_CDN
+                                  }/${encodeURIComponent(video.url)}`}
+                                  type="video/mp4"
+                                />
+                              </video>
+                            </div>
+                          </Post>
+                        ))
+                      : null}
+                  </div>
+                ) : type === "photos" ? (
+                  <div className="space-y-6">
+                    {media && media.length > 0
+                      ? media.map((photo) => (
+                          <Post
+                            key={photo}
+                            caption={caption}
+                            username={user.username}
+                            date="1h"
+                            content="Hello"
+                            src={user.profile_pic_url}
+                          >
+                            <div
+                              className={cn(
+                                "w-full relative min-h-{20rem} h-auto mb-4",
+                                thumbnail ? "z-10" : ""
+                              )}
+                            >
+                              <Image
+                                width={800}
+                                height={800}
+                                style={{ objectFit: "cover" }}
+                                className="rounded-3xl"
+                                src={photo.url}
+                                alt="Image"
+                              />
+                            </div>
+                          </Post>
+                        ))
+                      : null}
+                  </div>
+                ) : // unknown
+                null}
               </article>
             )
           )}
         </div>
       </Suspense>
-      {/* <ThreadPost /> */}
-      {/* <video
-        src="http://localhost:3001/scontent.cdninstagram.com/v/t50.2886-16/10000000_978374769947694_1099918139477963337_n.mp4?_nc_ht=scontent.cdninstagram.com&_nc_cat=106&_nc_ohc=DHz7TCxOuFgAX8xllhK&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfDR53I1MfcCY99bGFTocQQb7gs2Nlwv-N6XwejxEI7fug&oe=64DD1110&_nc_sid=10d13b"
-        crossOrigin="anonymous"
-        controls
-      ></video> */}
-      {/* <p className="text-muted-foreground">Click Download to get started.</p> */}
-      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4"> */}
-      {/* {threads?.map((thread, index) => (
-          <div key={index} className="border rounded-lg p-4">
-            <div className="flex items-center space-x-4">
-              <Image
-                src={thread.user.profile_pic_url}
-                alt={`Profile pic of ${thread.user.username}`}
-                className="w-10 h-10 rounded-full"
-                height={98}
-                width={98}
-              />
-              <span className="font-bold">{thread.user.username}</span>
-            </div>
-            <div className="mt-4">
-              {thread.type === "photos" && (
-                <div className="grid grid-cols-1 gap-4">
-                  {thread.photos.map((photo, photoIndex) => (
-                    <Image
-                      key={photoIndex}
-                      src={photo.url}
-                      height={thread.height}
-                      width={thread.width}
-                      alt={`Photo ${photoIndex}`}
-                      className="w-full"
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        ))} */}
-      {/* </div> */}
     </div>
   );
 };
