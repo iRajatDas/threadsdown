@@ -1,159 +1,156 @@
-interface User {
-  profile_pic_url: string;
-  username: string;
-  id: string | null;
-  is_verified: boolean;
-  pk: string;
-}
+import { ThreadsAPI } from "threads-api";
 
-interface ImageCandidate {
-  height: number;
-  url: string;
-  width: number;
-  __typename: string;
-}
+const threadsAPI = new ThreadsAPI({
+  deviceID: "android-2vhi2rsxehy00000",
+  username: "rajatdas.me",
+  password: "rajatdas@123#S$",
+});
 
-interface ImageVersions2 {
-  candidates: ImageCandidate[];
-}
+const cleanUrl = (url) => {
+  url = url.split("?")[0];
+  if (url[url.length - 1] == "?" || url[url.length - 1] == "/")
+    return cleanUrl(url.substring(0, url.length - 1));
+  return url;
+};
 
-interface VideoVersion {
-  type: number;
-  url: string;
-  __typename: string;
-}
+const getPostId = (url) => threadsAPI.getPostIDfromURL(url);
 
-interface TextPostAppInfo {
-  link_preview_attachment: any;
-  share_info: {
-    quoted_post: any;
-    reposted_post: any;
-  };
-  reply_to_author: any;
-  is_post_unavailable: boolean;
-}
+const getPostData = async (postId) => {
+  try {
+    let postData = await threadsAPI.getThreads(postId);
+    return postData;
+  } catch (err) {
+    console.log("Error on getPostData", err);
+    return null;
+  }
+};
 
-interface Post {
-  user: User;
-  image_versions2: ImageVersions2;
-  video_versions?: VideoVersion[];
-  carousel_media?: {
-    image_versions2: ImageVersions2;
-    video_versions: VideoVersion[];
-  }[];
-  original_height: number;
-  original_width: number;
-  pk: string;
-  id: string;
-  text_post_app_info: TextPostAppInfo;
-}
+export const getAllMedia = async (url: string): Promise<any> => {
+  try {
+    let postId = getPostId(url);
+    if (!postId) return { msg: "invalid url" };
 
-interface ContainingThread {
-  thread_items: {
-    post: Post;
-  }[];
-}
+    let postData = await getPostData(postId);
+    if (!postData) return { msg: "invalid url or blocked." };
 
-interface FetchResponse {
-  data: {
-    data: {
-      containing_thread: ContainingThread;
-    };
-  };
-}
+    let threadItems = postData.containing_thread?.thread_items || [];
 
-export const getPostData = async (id: string): Promise<FetchResponse> => {
-  let request = await fetch(
-    "https://corsproxy.io/?https://www.threads.net/api/graphql",
-    {
-      headers: {
-        "content-type": "application/x-www-form-urlencoded",
-        "x-asbd-id": "129477",
-        "x-fb-friendly-name": "BarcelonaPostPageQuery",
-        "x-fb-lsd": "N1RcROyvW2TeIOAP1NF1Rw",
-        "x-ig-app-id": "238260118697367",
-      },
-      body: `av=0&__user=0&__a=1&__req=1&__hs=19544.HYP%3Abarcelona_web_pkg.2.1..0.0&dpr=1&__ccg=EXCELLENT&__rev=1007797318&__s=4u5vr5%3A037tlu%3A3ofhp0&__hsi=7252781234368541407&__dyn=7xeUmwlEnwn8K2WnFw9-2i5U4e0yoW3q32360CEbo1nEhw2nVE4W0om78b87C0yE465o-cw5Mx62G3i0Bo7O2l0Fwqo31wnEfovwRwlE-U2zxe2Gew9O22362W2K0zK5o4q0GpovU1aUbodEGdwtU2ewbS1LwTwNwLw8O1pwr82gxC&__csr=gBGijox9k00lmRxy2Lxmckwky88z1aq1-zE19U4Oex2re7E8k2ybw8ZoD6G6O8mUQ4827x-0DofU466i0tk13gN02oPA0Wo7Z08423zog24g&__comet_req=29&lsd=N1RcROyvW2TeIOAP1NF1Rw&jazoest=21774&__spin_r=1007797318&__spin_b=trunk&__spin_t=1688669723&fb_api_caller_class=RelayModern&fb_api_req_friendly_name=BarcelonaPostPageQuery&variables=%7B%22postID%22%3A%22${id}%22%7D&server_timestamps=true&doc_id=5587632691339264`,
-      method: "POST",
+    if (threadItems.length === 0 || !threadItems[0]?.post?.user)
+      return { msg: "thread user invalid / inactive" };
+
+    let uname = threadItems[0].post.user.username || "err";
+
+    let allMedia: any[] = threadItems.map((thread) => {
+      return getMedia(thread);
+    });
+
+    if (postData.reply_threads && postData.reply_threads.length > 0) {
+      let contThread = postData.reply_threads[0] || null;
+
+      if (
+        contThread &&
+        contThread.thread_items.length > 0 &&
+        contThread.thread_items[0].post.user.username === uname
+      ) {
+        contThread.thread_items = contThread.thread_items.filter(
+          (t) => t.post.user.username === uname
+        );
+
+        if (contThread.thread_items.length > 0) {
+          allMedia = [
+            ...allMedia,
+            ...contThread.thread_items.map((t) => getMedia(t)),
+          ];
+        }
+      }
     }
+
+    return { media: allMedia, postData };
+  } catch (err) {
+    console.log(err);
+    return { msg: "unknown error", error: err };
+  }
+};
+
+const getMedia = (thread) => {
+  let media = thread.post;
+  media = media.text_post_app_info.share_info.quoted_post
+    ? media.text_post_app_info.share_info.quoted_post
+    : media; // quoted post
+  media = media.text_post_app_info.share_info.reposted_post
+    ? media.text_post_app_info.share_info.reposted_post
+    : media; // reposted post
+
+  const hasVideo = media.carousel_media?.some(
+    (item) => item.video_versions && item.video_versions.length > 0
   );
 
-  const data = await request.json();
-  return data as FetchResponse;
-};
-
-const getPostId = async (url: string): Promise<string> => {
-  const response = await fetch(url);
-  const text = await response.text();
-  const postId = text.match(/{"post_id":"(.*?)"}/);
-  return postId![1];
-};
-
-interface Media {
-  user: User;
-  type: string;
-  media: (ImageCandidate | VideoVersion)[];
-  photos?: ImageCandidate[];
-  width: number;
-  height: number;
-}
-
-const getMedia = (thread: { post: Post }): Media => {
-  let media = thread.post;
-  media = media.text_post_app_info.share_info.quoted_post || media; // quoted post
-  media = media.text_post_app_info.share_info.reposted_post || media; // reposted post
-
-  if (media.carousel_media) {
-    const carouselMedia = media.carousel_media;
-    const videos = carouselMedia.filter((item) => item.video_versions);
-    const photos = carouselMedia.filter((item) => !item.video_versions);
-
-    if (videos.length > 0) {
-      return {
-        user: media.user,
-        type: "videos",
-        media: videos.map((item) => item.video_versions[0]),
-        photos: videos.map((item) => item.image_versions2.candidates[0] || []),
-        width: media.original_width,
-        height: media.original_height,
-      };
-    } else if (photos.length > 0) {
-      return {
-        user: media.user,
-        type: "photos",
-        media: photos.map((item) => item.image_versions2.candidates[0]),
-        width: media.original_width,
-        height: media.original_height,
-      };
-    }
-  }
-
-  if (media.video_versions && media.video_versions.length > 0) {
+  if (hasVideo) {
     return {
       user: media.user,
       type: "videos",
-      media: [...media.video_versions],
+      media: media.carousel_media.map((media) => media.video_versions[0]),
       width: media.original_width,
       height: media.original_height,
+      caption: media.caption ? media.caption.text : "",
+      has_audio: media.has_audio,
+      taken_at: media.taken_at,
     };
   }
+
+  if (media.carousel_media && !hasVideo) {
+    return {
+      user: media.user,
+      type: "photos",
+      media: media.carousel_media.map(
+        (media) => media.image_versions2.candidates[0]
+      ),
+      width: media.original_width,
+      height: media.original_height,
+      caption: media.caption ? media.caption.text : "",
+      has_audio: media.has_audio,
+      taken_at: media.taken_at,
+    };
+  }
+
+  if (media) {
+    let thumbnail = media.image_versions2.candidates.filter(
+      (img) =>
+        img.width == media.original_width && img.height == media.original_height
+    );
+    thumbnail =
+      thumbnail.length > 0 ? thumbnail : [media.image_versions2.candidates[0]];
+
+    return {
+      user: media.user,
+      type: "video",
+      media: media.video_versions[0],
+      width: media.original_width,
+      height: media.original_height,
+      caption: media.caption ? media.caption.text : "",
+      has_audio: media.has_audio,
+      taken_at: media.taken_at,
+      thumbnail,
+    };
+  }
+
+  let medtest = media.image_versions2.candidates.filter(
+    (img) =>
+      img.width == media.original_width && img.height == media.original_height
+  );
+  medtest = medtest.length >= 1 ? medtest : [];
+  medtest = media.image_versions2.candidates[0]
+    ? [media.image_versions2.candidates[0]]
+    : medtest;
 
   return {
     user: media.user,
     type: "photo",
-    media: media.image_versions2.candidates,
+    media: medtest,
     width: media.original_width,
     height: media.original_height,
+    caption: media.caption ? media.caption.text : "",
+    has_audio: media.has_audio,
+    taken_at: media.taken_at,
   };
 };
-
-const getAllMedia = async (url: string): Promise<Media[]> => {
-  const postId = await getPostId(url);
-  const postData = await getPostData(postId);
-  const allMedia = postData.data.data.containing_thread.thread_items.map(
-    (thread) => getMedia(thread)
-  );
-  return allMedia;
-};
-
-export { getAllMedia, getMedia };
