@@ -8,14 +8,6 @@ import { cn } from "@/lib/utils";
 import axios from "axios";
 import { useThreadFormStore } from "@/lib/store";
 
-const fetchThreadsData = async (url: string) => {
-  try {
-    const response = await axios.get(url);
-    return response.data;
-  } catch (err) {
-    throw new Error("Error fetching data::");
-  }
-};
 const ThreadsSection = () => {
   const [mediaData, setMediaData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -37,13 +29,10 @@ const ThreadsSection = () => {
     fetchData();
   }, [threads]);
 
-  console.log(mediaData);
+  // console.log(loading,mediaData);
 
   return (
     <div className="px-default py-4 --mt-10 space-y-4">
-      {/* <h2 className="text-3xl md:text-system-28 md:leading-system-28 font-extrabold tracking-tight">
-        Download is Ready
-      </h2> */}
       <Suspense fallback={<LuLoader className="animate-spin" />}>
         <div className="[&_p:last-child]:text-slate-500 [&_p:first-child]:text-lg divide-y divide-barcelona-media-outline">
           {mediaData?.length !== 0

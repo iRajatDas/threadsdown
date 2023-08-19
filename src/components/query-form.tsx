@@ -32,7 +32,7 @@ const FormSchema = z.object({
   thread_url: z
     .string()
     .regex(
-      /^https:\/\/www\.threads\.net\/(@[a-zA-Z0-9]+\.)?t\/[a-zA-Z0-9-_]+$/,
+      /^(https:\/\/www\.threads\.net\/(@[\w.-]+\/post|t)\/[A-Za-z0-9_-]+)(\/\?[\w=&-]+)?$/,
       "Please enter a valid Threads Post link"
     ),
 });
