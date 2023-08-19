@@ -65,7 +65,7 @@ export const getAllMedia = async (url: string): Promise<any> => {
       }
     }
 
-    return { media: allMedia, postData };
+    return { media: allMedia };
   } catch (err) {
     console.log(err);
     return { msg: "unknown error", error: err };
@@ -85,11 +85,58 @@ const getMedia = (thread) => {
     (item) => item.video_versions && item.video_versions.length > 0
   );
 
+  const hasPhoto = media.carousel_media?.some(
+    (item) => item.image_versions2 && item.image_versions2.candidates.length > 0
+  );
+
+  if (hasVideo && hasPhoto) {
+    const videos = media.carousel_media
+      .filter((item) => item.video_versions && item.video_versions.length > 0)
+      .map((item) => item.video_versions[0]);
+
+    const photos = media.carousel_media
+      .filter(
+        (item) =>
+          item.image_versions2 && item.image_versions2.candidates.length > 0
+      )
+      .map((item) => item.image_versions2.candidates[0]);
+
+    if (videos.length === photos.length) {
+      return {
+        user: media.user,
+        type: "videos",
+        media: media.carousel_media
+          .filter(
+            (item) => item.video_versions && item.video_versions.length > 0
+          )
+          .map((item) => item.video_versions[0]),
+        width: media.original_width,
+        height: media.original_height,
+        caption: media.caption ? media.caption.text : "",
+        has_audio: media.has_audio,
+        taken_at: media.taken_at,
+      };
+    }
+
+    return {
+      user: media.user,
+      type: "photos_and_videos",
+      media: { photos, videos },
+      width: media.original_width,
+      height: media.original_height,
+      caption: media.caption ? media.caption.text : "",
+      has_audio: media.has_audio,
+      taken_at: media.taken_at,
+    };
+  }
+
   if (hasVideo) {
     return {
       user: media.user,
       type: "videos",
-      media: media.carousel_media.map((media) => media.video_versions[0]),
+      media: media.carousel_media
+        .filter((item) => item.video_versions && item.video_versions.length > 0)
+        .map((item) => item.video_versions[0]),
       width: media.original_width,
       height: media.original_height,
       caption: media.caption ? media.caption.text : "",
@@ -98,13 +145,16 @@ const getMedia = (thread) => {
     };
   }
 
-  if (media.carousel_media && !hasVideo) {
+  if (hasPhoto) {
     return {
       user: media.user,
       type: "photos",
-      media: media.carousel_media.map(
-        (media) => media.image_versions2.candidates[0]
-      ),
+      media: media.carousel_media
+        .filter(
+          (item) =>
+            item.image_versions2 && item.image_versions2.candidates.length > 0
+        )
+        .map((item) => item.image_versions2.candidates[0]),
       width: media.original_width,
       height: media.original_height,
       caption: media.caption ? media.caption.text : "",
@@ -113,7 +163,7 @@ const getMedia = (thread) => {
     };
   }
 
-  if (media) {
+  if (media && media.video_versions && media.video_versions.length > 0) {
     let thumbnail = media.image_versions2.candidates.filter(
       (img) =>
         img.width == media.original_width && img.height == media.original_height
@@ -143,14 +193,20 @@ const getMedia = (thread) => {
     ? [media.image_versions2.candidates[0]]
     : medtest;
 
-  return {
-    user: media.user,
-    type: "photo",
-    media: medtest,
-    width: media.original_width,
-    height: media.original_height,
-    caption: media.caption ? media.caption.text : "",
-    has_audio: media.has_audio,
-    taken_at: media.taken_at,
-  };
+  if (
+    media.video_versions &&
+    media.video_versions.length === 0 &&
+    media.carousel_media_count === null
+  ) {
+    return {
+      user: media.user,
+      type: "photo",
+      media: medtest,
+      width: media.original_width,
+      height: media.original_height,
+      caption: media.caption ? media.caption.text : "",
+      has_audio: media.has_audio,
+      taken_at: media.taken_at,
+    };
+  }
 };
