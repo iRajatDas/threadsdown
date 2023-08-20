@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { format } from "date-fns";
+import { formatDistanceToNow, fromUnixTime } from "date-fns";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -25,7 +26,6 @@ export function formatDate(input: string | number): string {
   });
 }
 
-
 export function readTime(wordCount: number) {
   const totalReadTime = wordCount / 200;
   return `${totalReadTime.toFixed(0)} min read`;
@@ -40,4 +40,11 @@ export function maybeTruncateTextBlock(textBlock: string, charLimit: number) {
 
 export function absoluteUrl(path: string) {
   return `${process.env.NEXT_PUBLIC_APP_URL}${path}`;
+}
+
+export function timeAgo(unixTimestamp: number): string {
+  const date = fromUnixTime(unixTimestamp);
+  return formatDistanceToNow(date, {
+    addSuffix: true,
+  }).replace("about", "");
 }

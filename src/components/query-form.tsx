@@ -30,13 +30,14 @@ import { useThreadFormStore } from "@/lib/store";
 
 const FormSchema = z.object({
   thread_url: z
-    .string()
+    .string({
+      required_error: "Please enter an URL",
+    })
     .regex(
       /^(https:\/\/www\.threads\.net\/(@[\w.-]+\/post|t)\/[A-Za-z0-9_-]+)(\/\?[\w=&-]+)?$/,
       "Please enter a valid Threads Post link"
     ),
 });
-
 
 export function QueryForm() {
   const threads = useThreadFormStore((state) => state.threads);
@@ -58,7 +59,7 @@ export function QueryForm() {
       await new Promise((resolve) => setTimeout(() => resolve(""), 3000));
       await axios.get(`/api/getThreads/?url=${data.thread_url}`).then((res) => {
         if (res.status === HttpStatusCode.Ok) {
-          console.log(res.data);
+          // console.log(res.data);
           setThreads(res.data);
           toast({
             title: "Ready to Download",
@@ -67,20 +68,20 @@ export function QueryForm() {
               "Congrats! Click the Download Threads Button to get your video downloaded",
             duration: 3000,
           });
-          console.log(threads)
+          // console.log(threads);
         } else {
-          !threads.hasOwnProperty("containing_thread") && clearThreads();
+          !threads.hasOwnProperty("media") && clearThreads();
         }
       });
     } catch (error) {
-      !threads.hasOwnProperty("containing_thread") && clearThreads();
+      !threads.hasOwnProperty("media") && clearThreads();
       toast({
         title: "Opps!!",
         description: "We are looking into what's went wrong.",
         variant: "destructive",
         duration: 5000,
       });
-      // console.log("Nope");
+      console.log("Nope");
     }
   };
 
