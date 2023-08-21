@@ -50,14 +50,17 @@ export const metadata: Metadata = {
   },
   keywords: [
     "threads video downloader",
+    "threads photos downloader",
     "thread video downloader",
     "instagram threads video download",
     "instagram thread video download",
     "threads video download",
     "instagram threads downloader",
     "threads downloader",
+    "threads media downloader",
     "threads video downloader online",
-    "threads video download online",
+    "threads photo downloader",
+    "threads dp download",
   ],
   authors: [
     {
