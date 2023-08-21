@@ -28,18 +28,29 @@ import { LuLoader } from "react-icons/lu";
 import axios, { HttpStatusCode } from "axios";
 import { useThreadFormStore } from "@/lib/store";
 
-const FormSchema = z.object({
-  thread_url: z
-    .string({
-      required_error: "Please enter an URL",
-    })
-    .regex(
-      /^(https:\/\/www\.threads\.net\/(@[\w.-]+\/post|t)\/[A-Za-z0-9_-]+)(\/\?[\w=&-]+)?$/,
-      "Please enter a valid Threads Post link"
-    ),
-});
+interface QueryType {
+  type?: "getThreads" | "getUserProfile";
+}
 
-export function QueryForm() {
+export function QueryForm({ type = "getThreads" }: QueryType) {
+  const FormSchema = z.object({
+    thread_url: z
+      .string({
+        required_error:
+          type === "getThreads"
+            ? "Please enter an url."
+            : "Please enter an username.",
+      })
+      .regex(
+        type === "getThreads"
+          ? /^(https:\/\/www\.threads\.net\/(@[\w.-]+\/post|t)\/[A-Za-z0-9_-]+)(\/\?[\w=&-]+)?$/
+          : /^[a-zA-Z0-9](?!.*\.\.)(?!.*\.$)[\w.]{1,28}[a-zA-Z0-9_]$/,
+        type === "getThreads"
+          ? "Please enter a valid threads post link."
+          : "Enter a valid username."
+      ),
+  });
+
   const threads = useThreadFormStore((state) => state.threads);
   const setThreads = useThreadFormStore((state) => state.setThreads);
   const clearThreads = useThreadFormStore((state) => state.clearThreads);
@@ -57,22 +68,30 @@ export function QueryForm() {
         itemID: "t",
       });
       await new Promise((resolve) => setTimeout(() => resolve(""), 3000));
-      await axios.get(`/api/getThreads/?url=${data.thread_url}`).then((res) => {
-        if (res.status === HttpStatusCode.Ok) {
-          // console.log(res.data);
-          setThreads(res.data);
-          toast({
-            title: "Ready to Download",
-            variant: "default",
-            description:
-              "Congrats! Click the Download Threads Button to get your video downloaded",
-            duration: 3000,
-          });
-          // console.log(threads);
-        } else {
-          !threads.hasOwnProperty("media") && clearThreads();
-        }
-      });
+      await axios
+        .get(
+          `/api/${
+            type === "getThreads" ? "getThreads" : "getUserProfile"
+          }/?url=${data.thread_url}`
+        )
+        .then((res) => {
+          if (res.status === HttpStatusCode.Ok) {
+            // reset form
+            form.reset({ thread_url: "" });
+
+            setThreads(res.data);
+            toast({
+              title: "Ready to Download",
+              variant: "default",
+              description:
+                "Congrats! Click the Download Threads Button to get your video downloaded",
+              duration: 3000,
+            });
+            // console.log(threads);
+          } else {
+            !threads.hasOwnProperty("media") && clearThreads();
+          }
+        });
     } catch (error) {
       !threads.hasOwnProperty("media") && clearThreads();
       toast({
@@ -93,14 +112,22 @@ export function QueryForm() {
           name="thread_url"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-lg">Enter URL</FormLabel>
+              <FormLabel className="text-lg">
+                Enter {type === "getThreads" ? "URL" : "Username"}
+              </FormLabel>
               <FormDescription className="text-sm pb-1">
-                Copy threads post link and paste it.
+                {type === "getThreads"
+                  ? "Copy threads post link and paste it."
+                  : "Write down threads profile username"}
               </FormDescription>
               <FormControl>
                 <Textarea
                   autoFocus
-                  placeholder="https://www.threads.net/t/u3y2g4n3"
+                  placeholder={
+                    type === "getThreads"
+                      ? "https://www.threads.net/t/u3y2g4n3"
+                      : "@zuck"
+                  }
                   className="resize-none rounded-xl bg-barcelona-tertiary-text text-lg"
                   rows={1}
                   cols={5}
@@ -123,7 +150,7 @@ export function QueryForm() {
               Please wait ...
             </>
           ) : (
-            <span className="">Download now</span>
+            <span className="">Get Details</span>
           )}
         </Button>
       </form>

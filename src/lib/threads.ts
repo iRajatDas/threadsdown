@@ -230,6 +230,18 @@ const getUserID = async (username: string): Promise<string | null> => {
   return userID || null;
 };
 
+export const getUserProfileLoggedIn = async (
+  username: string
+): Promise<any | null> => {
+  const userID = await getUserID(username);
+
+  if (!userID) {
+    return null;
+  }
+
+  const user = await threadsAPI.getUserProfileLoggedIn(userID);
+  return user || null;
+};
 export const getUserProfile = async (username: string): Promise<any | null> => {
   const userID = await getUserID(username);
 
