@@ -25,6 +25,7 @@ module.exports = {
         "barcelona-primary-text": "rgb(243, 245, 247)",
         "barcelona-secondary-text": "rgb(97, 97, 97)",
         "barcelona-tertiary-text": "rgb(30, 30, 30)",
+        "barcelona-tertiary-background": "rgb(30, 30, 30)",
         "barcelona-link-text": "rgb(24, 163, 254)",
         "barcelona-error-text": "rgb(255, 48, 64)",
         "barcelona-primary-outline": "rgba(243, 245, 247, 0.15)",

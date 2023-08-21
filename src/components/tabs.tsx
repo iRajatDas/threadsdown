@@ -50,7 +50,7 @@ const Tabs = () => {
           aria-disabled={true}
           className={cn(
             buttonVariants({ variant: "ghost" }),
-            "w-full py-6 hover:bg-barcelona-media-outline rounded-none whitespace-pre pointer-events-none cursor-not-allowed",
+            "w-full py-6 hover:bg-barcelona-media-outline rounded-none whitespace-pre",
             pathname?.includes("dp-downloader")
               ? "bg-barcelona-media-outline"
               : ""

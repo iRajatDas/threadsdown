@@ -1,4 +1,4 @@
-import { getAllMedia } from "@/lib/threads";
+import { getUserProfile } from "@/lib/threads";
 
 export async function GET(request: Request) {
   const origin = request.headers.get("host");
@@ -19,14 +19,14 @@ export async function GET(request: Request) {
     });
   }
 
-  const postData = await getAllMedia(url);
-  if (!postData) {
+  const user = await getUserProfile(url);
+  if (!user) {
     return new Response("Something went wrong with the request.", {
       status: 404,
     });
   }
 
-  return new Response(JSON.stringify(postData), {
+  return new Response(JSON.stringify(user), {
     status: 200,
     headers: {
       "Access-Control-Allow-Origin": origin,

@@ -224,3 +224,19 @@ const getMedia = (thread) => {
     };
   }
 };
+
+const getUserID = async (username: string): Promise<string | null> => {
+  const userID = await threadsAPI.getUserIDfromUsername(username);
+  return userID || null;
+};
+
+export const getUserProfile = async (username: string): Promise<any | null> => {
+  const userID = await getUserID(username);
+
+  if (!userID) {
+    return null;
+  }
+
+  const user = await threadsAPI.getUserProfile(userID);
+  return user || null;
+};

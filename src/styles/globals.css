@@ -3,52 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-  /* :root {
-    --background: 0 0% 100%;
-    --foreground: 20 14.3% 4.1%;
- 
-    --muted: 60 4.8% 95.9%;
-    --muted-foreground: 25 5.3% 44.7%;
- 
-    --popover: 0 0% 100%;
-    --popover-foreground: 20 14.3% 4.1%;
- 
-    --card: 0 0% 100%;
-    --card-foreground: 20 14.3% 4.1%;
- 
-    --border: 20 5.9% 90%;
-    --input: 20 5.9% 90%;
- 
-    --primary: 24 9.8% 10%;
-    --primary-foreground: 60 9.1% 97.8%;
- 
-    --secondary: 60 4.8% 95.9%;
-    --secondary-foreground: 24 9.8% 10%;
- 
-    --accent: 60 4.8% 95.9%;
-    --accent-foreground: 24 9.8% 10%;
- 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 60 9.1% 97.8%;
- 
-    --ring: 24 5.4% 63.9%;
- 
-    --radius: 0.5rem;
-  } */
-
-  *::selection {
-    @apply bg-barcelona-elevated-border
-  }
-
-  html,
-  body {
-    font-size: 15px;
-  }
-  html,
-  body {
-    @apply h-full w-full min-h-full antialiased ;
-  }
-
   :root {
     --background: 20 14.3% 4.1%;
     --foreground: 60 9.1% 97.8%;
@@ -86,7 +40,21 @@
   * {
     @apply border-border;
   }
+
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  *::selection {
+    @apply bg-barcelona-elevated-border;
+  }
+
+  html,
   body {
-    @apply bg-barcelona-primary-background text-barcelona-primary-text;
+    font-size: 15px;
+  }
+  html,
+  body {
+    @apply h-full w-full min-h-full antialiased bg-barcelona-primary-background text-barcelona-primary-text;
   }
 }
