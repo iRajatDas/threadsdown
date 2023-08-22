@@ -15,7 +15,6 @@ import { LuChevronRight } from "react-icons/lu";
 import { buttonVariants } from "@/components/ui/button";
 import { Metadata } from "next";
 import { InstagramProfileCard } from "./components/cards";
-import SectionUserProfile from "./components/section-profile";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL as string),
@@ -38,7 +37,7 @@ const DpDownloader = async () => {
     <>
       <EntrySection />
       <FormSection type="getUserProfile" />
-      <SectionUserProfile />
+      <InstagramProfileCard />
       <ThreadsSection />
       <AlertSection />
       <FAQSection />

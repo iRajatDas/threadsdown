@@ -27,6 +27,7 @@ import {
 import { LuLoader } from "react-icons/lu";
 import axios, { HttpStatusCode } from "axios";
 import { useThreadFormStore } from "@/lib/store";
+import { sleep } from "@/lib/utils";
 
 interface QueryType {
   type?: "getThreads" | "getUserProfile";
@@ -67,7 +68,12 @@ export function QueryForm({ type = "getThreads" }: QueryType) {
         description: "Please wait while we're getting things things ready.",
         itemID: "t",
       });
-      await new Promise((resolve) => setTimeout(() => resolve(""), 3000));
+      await sleep(3000, 6000);
+      if (
+        threads.hasOwnProperty("media") ||
+        threads.hasOwnProperty("full_name")
+      )
+        clearThreads();
       await axios
         .get(
           `/api/${
@@ -76,7 +82,7 @@ export function QueryForm({ type = "getThreads" }: QueryType) {
         )
         .then((res) => {
           if (res.status === HttpStatusCode.Ok) {
-            // reset form
+            // reset form and data if any
             form.reset({ thread_url: "" });
 
             setThreads(res.data);
@@ -112,8 +118,8 @@ export function QueryForm({ type = "getThreads" }: QueryType) {
           name="thread_url"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-lg">
-                Enter {type === "getThreads" ? "URL" : "Username"}
+              <FormLabel className="lg:text-lg">
+                Type {type === "getThreads" ? "URL" : "username"}
               </FormLabel>
               <FormDescription className="text-sm pb-1">
                 {type === "getThreads"
