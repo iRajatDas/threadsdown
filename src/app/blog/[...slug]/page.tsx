@@ -117,7 +117,7 @@ export default async function PostPage({ params }: PostPageProps) {
         description={post.title}
         useAppDir
       />
-      <article className="container relative max-w-3xl py-6 lg:py-10">
+      <article className="container relative max-w-3xl py-6 lg:py-10 px-4 md:px-[inherit]">
         <Link
           href="/blog"
           className={cn(
