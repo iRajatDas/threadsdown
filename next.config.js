@@ -6,17 +6,7 @@ const CDN = process.env.NEXT_PUBLIC_APP_CDN;
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: [
-      CDN,
-      "avatars.githubusercontent.com",
-      "images.unsplash.com",
-      "getthreads.cdn-threads.workers.dev",
-      "scontent.cdninstagram.com",
-    ],
-  },
-  experimental: {
-    appDir: true,
-    serverActions: true,
+    domains: [CDN, "scontent.cdninstagram.com"],
   },
 };
 

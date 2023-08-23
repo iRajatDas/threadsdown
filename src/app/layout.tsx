@@ -38,6 +38,7 @@ const inter = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL as string),
   title: {
     default:
       "Threads Video Downloader | Download Photos & Videos From Thread For Free In High Quality",
