@@ -117,7 +117,7 @@ export default async function PostPage({ params }: PostPageProps) {
         description={post.title}
         useAppDir
       />
-      <article className="container relative max-w-3xl py-6 lg:py-10 px-4 md:px-[inherit]">
+      <article className="container relative max-w-3xl px-4 py-6 md:px-[inherit] lg:py-10">
         <Link
           href="/blog"
           className={cn(
@@ -136,7 +136,7 @@ export default async function PostPage({ params }: PostPageProps) {
               Published on {formatDate(post.date)}
             </time>
           )}
-          <h1 className="mt-2 inline-block font-bold text-4xl leading-tight lg:text-5xl">
+          <h1 className="mt-2 inline-block text-4xl font-bold leading-tight lg:text-5xl">
             {post.title}
           </h1>
           {authors?.length ? (

@@ -45,25 +45,25 @@ const CookieConsent = () => {
             delay: 0.5,
             duration: 0.7,
           }}
-          className="w-full py-2 md:py-4 px-default fixed bottom-1 md:bottom-6 z-40 left-0 right-0 max-w-3xl mx-auto"
+          className="fixed bottom-1 left-0 right-0 z-40 mx-auto w-full max-w-3xl px-default py-2 md:bottom-6 md:py-4"
         >
-          <div className="flex items-start px-5 py-3 bg-barcelona-elevated-background/70 backdrop-blur md:items-stretch md:space-x-2 rounded-lg border border-barcelona-elevated-border space-x-1">
-            <div className="flex items-center text-barcelona-primary-text flex-1">
-              <p className="text-[0.645rem] md:text-xs font-medium">
+          <div className="flex items-start space-x-1 rounded-lg border border-barcelona-elevated-border bg-barcelona-elevated-background/70 px-5 py-3 backdrop-blur md:items-stretch md:space-x-2">
+            <div className="flex flex-1 items-center text-barcelona-primary-text">
+              <p className="text-[0.645rem] font-medium md:text-xs">
                 Site uses cookies for better experience, traffic analysis; check
                 privacy policy for service info{" "}
                 <Link
                   href="/privacy-policy"
-                  className="text-[0.645rem] md:text-xs underline"
+                  className="text-[0.645rem] underline md:text-xs"
                 >
                   privacy policy
                 </Link>
                 .
               </p>
             </div>
-            <div className="flex items-center shrink-0">
+            <div className="flex shrink-0 items-center">
               <Button
-                className="p-3 text-[0.645rem] md:text-xs uppercase whitespace-nowrap border-barcelona-elevated-border bg-barcelona-primary-background"
+                className="whitespace-nowrap border-barcelona-elevated-border bg-barcelona-primary-background p-3 text-[0.645rem] uppercase md:text-xs"
                 variant={"outline"}
                 onClick={(e) => {
                   onCycle(); // Call onCycle to toggle isVisible

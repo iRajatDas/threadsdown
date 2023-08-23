@@ -115,9 +115,9 @@ export default function RootLayout({
         `}
       </Script>
       <body className={cn("font-sans")}>
-        <div className="max-w-3xl mx-auto w-full h-full">
+        <div className="mx-auto h-full w-full max-w-3xl">
           <Toaster />
-          <div className="flex flex-col h-full relative">
+          <div className="relative flex h-full flex-col">
             <CookieConsent />
             <Header />
             <main className="flex-1">{children}</main>

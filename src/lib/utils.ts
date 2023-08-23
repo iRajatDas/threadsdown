@@ -49,7 +49,6 @@ export function timeAgo(unixTimestamp: number): string {
   }).replace("about", "");
 }
 
-
 export const sleep = async (minMilliseconds, maxMilliseconds) => {
   const sleepTime =
     Math.random() * (maxMilliseconds - minMilliseconds) + minMilliseconds;

@@ -9,13 +9,13 @@ import { usePathname } from "next/navigation";
 const Tabs = () => {
   const pathname = usePathname();
   return (
-    <div className="bg-barcelona-secondary-background rounded-2xl border overflow-hidden">
+    <div className="overflow-hidden rounded-2xl border bg-barcelona-secondary-background">
       <div className="flex items-center overflow-x-auto scrollbar-none">
         <Link
           href={"/"}
           className={cn(
             buttonVariants({ variant: "ghost" }),
-            "w-full py-6 hover:bg-barcelona-media-outline rounded-none whitespace-pre",
+            "w-full whitespace-pre rounded-none py-6 hover:bg-barcelona-media-outline",
             pathname === "/" ? "bg-barcelona-media-outline" : ""
           )}
         >
@@ -25,7 +25,7 @@ const Tabs = () => {
           href={"/photo-downloader"}
           className={cn(
             buttonVariants({ variant: "ghost" }),
-            "w-full py-6 hover:bg-barcelona-media-outline rounded-none whitespace-pre",
+            "w-full whitespace-pre rounded-none py-6 hover:bg-barcelona-media-outline",
             pathname?.includes("photo-downloader")
               ? "bg-barcelona-media-outline"
               : ""
@@ -37,7 +37,7 @@ const Tabs = () => {
           href={"/video-downloader"}
           className={cn(
             buttonVariants({ variant: "ghost" }),
-            "w-full py-6 hover:bg-barcelona-media-outline rounded-none whitespace-pre",
+            "w-full whitespace-pre rounded-none py-6 hover:bg-barcelona-media-outline",
             pathname?.includes("video-downloader")
               ? "bg-barcelona-media-outline"
               : ""
@@ -50,7 +50,7 @@ const Tabs = () => {
           aria-disabled={true}
           className={cn(
             buttonVariants({ variant: "ghost" }),
-            "w-full py-6 hover:bg-barcelona-media-outline rounded-none whitespace-pre",
+            "w-full whitespace-pre rounded-none py-6 hover:bg-barcelona-media-outline",
             pathname?.includes("dp-downloader")
               ? "bg-barcelona-media-outline"
               : ""

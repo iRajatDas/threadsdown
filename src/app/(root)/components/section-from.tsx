@@ -10,7 +10,7 @@ const FormSection: FC<QueryType> = ({ type = "getThreads" }) => {
   return (
     <div className="px-default py-4 shadow">
       <Tabs />
-      <div className="px-default py-4 bg-barcelona-secondary-background rounded-2xl border mt-4">
+      <div className="mt-4 rounded-2xl border bg-barcelona-secondary-background px-default py-4">
         <QueryForm type={type} />
       </div>
     </div>

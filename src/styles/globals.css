@@ -55,6 +55,6 @@
   }
   html,
   body {
-    @apply h-full w-full min-h-full antialiased bg-barcelona-primary-background text-barcelona-primary-text;
+    @apply h-full min-h-full w-full bg-barcelona-primary-background text-barcelona-primary-text antialiased;
   }
 }

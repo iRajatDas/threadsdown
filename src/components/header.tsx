@@ -1,13 +1,13 @@
-import Link from 'next/link';
-import React from 'react'
-import IconThreads from '@/components/icons/icon-threads';
+import Link from "next/link";
+import React from "react";
+import IconThreads from "@/components/icons/icon-threads";
 
 const Header = () => {
   return (
-    <div className="h-header-size flex items-center justify-center shrink-0">
-      <Link href={"/"} className="flex group">
+    <div className="flex h-header-size shrink-0 items-center justify-center">
+      <Link href={"/"} className="group flex">
         <div
-          className="select-none mr-2 group-hover:scale-105 transition-all duration-150 ease-in-out"
+          className="mr-2 select-none transition-all duration-150 ease-in-out group-hover:scale-105"
           role="button"
           tabIndex={0}
         >
@@ -19,6 +19,6 @@ const Header = () => {
       </Link>
     </div>
   );
-}
+};
 
-export default Header
+export default Header;

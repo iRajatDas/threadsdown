@@ -49,7 +49,7 @@ export const metadata = {
   authors: [
     {
       name: "instaThreadsDown",
-      url: siteConfig.url
+      url: siteConfig.url,
     },
   ],
   creator: "shadcn",
@@ -95,9 +95,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body className={cn("font-sans")}>
-        <div className="max-w-3xl mx-auto w-full h-full">
+        <div className="mx-auto h-full w-full max-w-3xl">
           <Toaster />
-          <div className="flex flex-col h-full">
+          <div className="flex h-full flex-col">
             <Header />
             <main className="flex-1">{children}</main>
             <Footer />

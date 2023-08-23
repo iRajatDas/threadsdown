@@ -35,8 +35,8 @@ const ThreadsSection = () => {
     return null;
   }
   return (
-    <div className="px-default py-4 --mt-10 space-y-4">
-      <div className="[&_p:last-child]:text-slate-500 [&_p:first-child]:text-lg divide-y divide-barcelona-media-outline">
+    <div className="--mt-10 space-y-4 px-default py-4">
+      <div className="divide-y divide-barcelona-media-outline [&_p:first-child]:text-lg [&_p:last-child]:text-slate-500">
         {mediaData?.length !== 0 ? (
           mediaData?.media?.map(
             (
@@ -67,7 +67,7 @@ const ThreadsSection = () => {
                   >
                     <div
                       className={cn(
-                        "w-1/2 sm:w-1/3 md:w-1/2 relative min-h-{20rem} mb-4",
+                        "min-h-{20rem} relative mb-4 w-1/2 sm:w-1/3 md:w-1/2",
                         thumbnail ? "z-10" : ""
                       )}
                     >
@@ -102,7 +102,7 @@ const ThreadsSection = () => {
                   >
                     <div
                       className={cn(
-                        "w-1/2 sm:w-1/3 md:w-1/2 relative min-h-{20rem} mb-4",
+                        "min-h-{20rem} relative mb-4 w-1/2 sm:w-1/3 md:w-1/2",
                         thumbnail ? "z-10" : ""
                       )}
                     >
@@ -136,7 +136,7 @@ const ThreadsSection = () => {
                             >
                               <div
                                 className={cn(
-                                  "w-1/2 sm:w-1/3 md:w-1/2 relative min-h-{20rem} mb-4",
+                                  "min-h-{20rem} relative mb-4 w-1/2 sm:w-1/3 md:w-1/2",
                                   thumbnail ? "z-10" : ""
                                 )}
                               >
@@ -175,7 +175,7 @@ const ThreadsSection = () => {
                           >
                             <div
                               className={cn(
-                                "w-1/2 sm:w-1/3 md:w-1/2 relative min-h-{20rem} mb-4",
+                                "min-h-{20rem} relative mb-4 w-1/2 sm:w-1/3 md:w-1/2",
                                 thumbnail ? "z-10" : ""
                               )}
                             >
@@ -210,7 +210,7 @@ const ThreadsSection = () => {
                           >
                             <div
                               className={cn(
-                                "w-1/2 sm:w-1/3 md:w-1/2 relative min-h-{20rem} mb-4",
+                                "min-h-{20rem} relative mb-4 w-1/2 sm:w-1/3 md:w-1/2",
                                 thumbnail ? "z-10" : "",
                                 isPortrait(height, width)
                                   ? `${height}`
@@ -255,7 +255,7 @@ const ThreadsSection = () => {
                           >
                             <div
                               className={cn(
-                                "w-1/2 sm:w-1/3 md:w-1/2 relative min-h-{20rem} mb-4",
+                                "min-h-{20rem} relative mb-4 w-1/2 sm:w-1/3 md:w-1/2",
                                 thumbnail ? "z-10" : ""
                               )}
                             >
@@ -326,33 +326,33 @@ const Post = ({
         height="36"
         width="36"
         alt="rajatdas.me's profile picture"
-        className="object-cover origin-center rounded-full"
+        className="origin-center rounded-full object-cover"
         crossOrigin="anonymous"
         src="https://scontent.cdninstagram.com/v/t51.2885-19/357834101_977883033280721_3449271728947456340_n.jpg?stp=dst-jpg_s150x150&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=105&amp;_nc_ohc=TIsz2OnSVLkAX-hiUTe&amp;edm=APs17CUBAAAA&amp;ccb=7-5&amp;oh=00_AfDfK8lfnAcHfe9DyZUm408kHnUDhxflp6x7feupohlBwg&amp;oe=64E1B1A2&amp;_nc_sid=10d13b"
       />
     </div>
-    <div className="flex flex-col flex-1">
+    <div className="flex flex-1 flex-col">
       <div className="flex flex-1">
         <div className="flex flex-1 gap-x-1 text-base">
-          <span className="text-slate-200 font-bold">@{username}</span>
-          <span className="text-barcelona-secondary-text font-medium">
+          <span className="font-bold text-slate-200">@{username}</span>
+          <span className="font-medium text-barcelona-secondary-text">
             {date}
           </span>
         </div>
         <div className="">{/* <DropdownMenuDemo /> */}</div>
       </div>
-      <div className="text-muted-foreground text-base md:py-2 mb-4">
+      <div className="mb-4 text-base text-muted-foreground md:py-2">
         {caption}
       </div>
       {children}
       <div>
-        <div className="flex gap-x-10 xl:gap-x-14 text-base text-slate-100 [&_li:first-child]:hidden [&_li:first-child]:lg:flex [&_li]:flex [&_li]:items-center [&_li]:gap-x-2 [&_li:xl]:gap-x-3 ">
+        <div className="flex gap-x-10 text-base text-slate-100 xl:gap-x-14 [&_li:first-child]:hidden [&_li:first-child]:lg:flex [&_li:xl]:gap-x-3 [&_li]:flex [&_li]:items-center [&_li]:gap-x-2 ">
           <Link
             href={downloadable || ""}
             target="_blank"
             className={cn(
               buttonVariants({ variant: "default" }),
-              "w-full rounded-3xl text-opacity-100 bg-opacity-70"
+              "w-full rounded-3xl bg-opacity-70 text-opacity-100"
             )}
           >
             Download

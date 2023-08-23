@@ -31,7 +31,10 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    ".contentlayer/generated"
-, "src/pages/api/insta.js", "src/pages/api/scrape/index.js", "src/pages/api/proxy.js"  ],
+    ".contentlayer/generated",
+    "src/pages/api/insta.js",
+    "src/pages/api/scrape/index.js",
+    "src/pages/api/proxy.js"
+  ],
   "exclude": ["node_modules"]
 }

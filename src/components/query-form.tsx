@@ -121,7 +121,7 @@ export function QueryForm({ type = "getThreads" }: QueryType) {
               <FormLabel className="lg:text-lg">
                 Type {type === "getThreads" ? "URL" : "username"}
               </FormLabel>
-              <FormDescription className="text-sm pb-1">
+              <FormDescription className="pb-1 text-sm">
                 {type === "getThreads"
                   ? "Copy threads post link and paste it."
                   : "Write down threads profile username"}
@@ -145,14 +145,14 @@ export function QueryForm({ type = "getThreads" }: QueryType) {
           )}
         />
         <Button
-          className="rounded-xl w-full"
+          className="w-full rounded-xl"
           type="submit"
           size={"lg"}
           disabled={form.formState.isSubmitting}
         >
           {form.formState.isSubmitting ? (
             <>
-              <LuLoader className="h-5 w-5 mr-2 animate-spin duration-1000 ease-in-out" />
+              <LuLoader className="mr-2 h-5 w-5 animate-spin duration-1000 ease-in-out" />
               Please wait ...
             </>
           ) : (

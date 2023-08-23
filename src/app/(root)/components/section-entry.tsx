@@ -9,8 +9,8 @@ const EntrySection = () => {
   // };
 
   return (
-    <div className="text-base w-full font-nrmal px-default py-4 text-center space-y-2">
-      <h1 className="text-xl md:text-system-24 md:leading-system-24 font-bold tracking-tight">
+    <div className="font-nrmal w-full space-y-2 px-default py-4 text-center text-base">
+      <h1 className="text-xl font-bold tracking-tight md:text-system-24 md:leading-system-24">
         Threads video downloader
       </h1>
       <p className="text-muted-foreground  md:text-system-18 md:leading-system-18">

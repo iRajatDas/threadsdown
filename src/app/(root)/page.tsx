@@ -36,8 +36,8 @@ const Homepage = async () => {
       <ThreadsSection />
       <AlertSection />
       <FAQSection />
-      <div className="px-default py-4 mt-10 space-y-4">
-        <h2 className="text-3xl md:text-system-28 md:leading-system-28 font-extrabold tracking-tight">
+      <div className="mt-10 space-y-4 px-default py-4">
+        <h2 className="text-3xl font-extrabold tracking-tight md:text-system-28 md:leading-system-28">
           Read some articles
         </h2>
         <div className="space-y-6 py-6">
@@ -61,7 +61,7 @@ const Homepage = async () => {
                     )}
                     <h2 className="text-2xl font-extrabold">{post.title}</h2>
                     {post.description && (
-                      <p className="text-muted-foreground line-clamp-3">
+                      <p className="line-clamp-3 text-muted-foreground">
                         {post.description}
                       </p>
                     )}
