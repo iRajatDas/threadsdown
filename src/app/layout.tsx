@@ -7,6 +7,7 @@ import localFont from "next/font/local";
 import { siteConfig } from "@/config/site";
 import { Metadata } from "next";
 import Script from "next/script";
+import CookieConsent from "@/components/cookie-consent";
 
 const GTM_ID = "GTM-546JSW3K";
 
@@ -115,7 +116,8 @@ export default function RootLayout({
       <body className={cn("font-sans")}>
         <div className="max-w-3xl mx-auto w-full h-full">
           <Toaster />
-          <div className="flex flex-col h-full">
+          <div className="flex flex-col h-full relative">
+            <CookieConsent />
             <Header />
             <main className="flex-1">{children}</main>
             <Footer />

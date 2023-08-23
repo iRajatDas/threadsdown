@@ -41,6 +41,7 @@
     "esbuild": "0.18.2",
     "eslint": "8.44.0",
     "framer-motion": "^10.12.18",
+    "js-cookie": "^3.0.5",
     "next": "13.4.16",
     "next-contentlayer": "^0.3.3",
     "next-seo": "^6.1.0",
@@ -63,6 +64,7 @@
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/typography": "^0.5.9",
+    "@types/js-cookie": "^3.0.3",
     "date-fns": "^2.30.0",
     "eslint-config-next": "13.4.16",
     "loader-utils": "^3.2.1",
