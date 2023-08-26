@@ -7,7 +7,7 @@ const AlertSection = async () => {
     <div className="px-default py-4">
       <Alert className="rounded-2xl">
         <LuAlertCircle className="h-4 w-4" />
-        <AlertTitle className="text-base">Notice</AlertTitle>
+        <AlertTitle className="text-base">Disclosure!</AlertTitle>
         <AlertDescription className="space-y-2 text-base text-muted-foreground">
           <p>
             Insta Threads Down is not affiliated with Meta™. We do not host any

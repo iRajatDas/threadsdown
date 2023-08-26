@@ -68,7 +68,9 @@ export function QueryForm({ type = "getThreads" }: QueryType) {
         description: "Please wait while we're getting things things ready.",
         itemID: "t",
       });
-      await sleep(3000, 6000);
+
+      process.env.NODE_ENV === "production" ? await sleep(3000, 6000) : null;
+
       if (
         threads.hasOwnProperty("media") ||
         threads.hasOwnProperty("full_name")

@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { buttonVariants } from "@/components/ui/button";
 import { cn, timeAgo } from "@/lib/utils";
@@ -31,9 +31,6 @@ const ThreadsSection = () => {
     fetchData();
   }, [threads]);
 
-  if (mediaData?.length <= 0 || !mediaData?.hasOwnProperty("media")) {
-    return null;
-  }
   return (
     <div className="--mt-10 space-y-4 px-default py-4">
       <div className="divide-y divide-barcelona-media-outline [&_p:first-child]:text-lg [&_p:last-child]:text-slate-500">
@@ -102,7 +99,7 @@ const ThreadsSection = () => {
                   >
                     <div
                       className={cn(
-                        "min-h-{20rem} relative mb-4 w-1/2 sm:w-1/3 md:w-1/2",
+                        "min-h-{20rem} relative mb-4 w-full rounded-3xl border border-barcelona-elevated-border/10 sm:w-1/3 md:w-1/2 lg:w-3/4 xl:w-1/2 select-none",
                         thumbnail ? "z-10" : ""
                       )}
                     >
@@ -110,7 +107,7 @@ const ThreadsSection = () => {
                         width={800}
                         height={800}
                         style={{ objectFit: "cover" }}
-                        className="rounded-3xl"
+                        className="rounded-3xl pointer-events-none"
                         src={media[0].url}
                         alt="Image"
                       />
@@ -298,7 +295,7 @@ const ThreadsSection = () => {
 
 export default ThreadsSection;
 
-interface Props {
+interface Props extends React.HTMLProps<HTMLDivElement> {
   content: string;
   username: string;
   date: string;
@@ -319,64 +316,72 @@ const Post = ({
   onClick,
   downloadable,
   ...props
-}: Props) => (
-  <div className="flex flex-1 gap-x-4" {...props}>
-    <div className="flex-shrink-0">
-      <Image
-        height="36"
-        width="36"
-        alt="rajatdas.me's profile picture"
-        className="origin-center rounded-full object-cover"
-        crossOrigin="anonymous"
-        src="https://scontent.cdninstagram.com/v/t51.2885-19/357834101_977883033280721_3449271728947456340_n.jpg?stp=dst-jpg_s150x150&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=105&amp;_nc_ohc=TIsz2OnSVLkAX-hiUTe&amp;edm=APs17CUBAAAA&amp;ccb=7-5&amp;oh=00_AfDfK8lfnAcHfe9DyZUm408kHnUDhxflp6x7feupohlBwg&amp;oe=64E1B1A2&amp;_nc_sid=10d13b"
-      />
-    </div>
-    <div className="flex flex-1 flex-col">
-      <div className="flex flex-1">
-        <div className="flex flex-1 gap-x-1 text-base">
-          <span className="font-bold text-slate-200">@{username}</span>
-          <span className="font-medium text-barcelona-secondary-text">
-            {date}
-          </span>
-        </div>
-        <div className="">{/* <DropdownMenuDemo /> */}</div>
-      </div>
-      <div className="mb-4 text-base text-muted-foreground md:py-2">
-        {caption}
-      </div>
-      {children}
-      <div>
-        <div className="flex gap-x-10 text-base text-slate-100 xl:gap-x-14 [&_li:first-child]:hidden [&_li:first-child]:lg:flex [&_li:xl]:gap-x-3 [&_li]:flex [&_li]:items-center [&_li]:gap-x-2 ">
-          <Link
-            href={downloadable || ""}
-            target="_blank"
-            className={cn(
-              buttonVariants({ variant: "default" }),
-              "w-full rounded-3xl bg-opacity-70 text-opacity-100"
-            )}
-          >
-            Download
-          </Link>
+}: Props) => {
+  const ref = useRef<HTMLDivElement>(null);
 
-          {/* <li className="">
-            <HiOutlineChartBarSquare className="w-5 h-5" />
-            20
-          </li>
-          <li>
-            <HiOutlineChatBubbleOvalLeft className="w-5 h-5" />2
-          </li>
-          <li>
-            <HiOutlineArrowPath className="w-5 h-5" />1
-          </li>
-          <li>
-            <HiOutlineHeart className="w-5 h-5" />
-            23
-          </li>
-          <li>
-            <HiArrowUpTray className="w-5 h-5" />
-          </li> */}
+  const scrollToElement = () => {
+    if (ref.current) {
+      const offset = 278;
+      const topPosition =
+        ref.current.getBoundingClientRect().top + window.scrollY - offset;
+
+      window.scrollTo({ top: topPosition, behavior: "smooth" });
+    }
+  };
+
+  useEffect(() => {
+    scrollToElement();
+  }, []);
+
+  return (
+    <div className="flex flex-1 gap-x-4" ref={ref} {...props}>
+      <div className="flex-shrink-0">
+        <Image
+          height="36"
+          width="36"
+          alt="rajatdas.me's profile picture"
+          className="origin-center rounded-full object-cover"
+          crossOrigin="anonymous"
+          src="https://scontent.cdninstagram.com/v/t51.2885-19/357834101_977883033280721_3449271728947456340_n.jpg?stp=dst-jpg_s150x150&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=105&amp;_nc_ohc=TIsz2OnSVLkAX-hiUTe&amp;edm=APs17CUBAAAA&amp;ccb=7-5&amp;oh=00_AfDfK8lfnAcHfe9DyZUm408kHnUDhxflp6x7feupohlBwg&amp;oe=64E1B1A2&amp;_nc_sid=10d13b"
+        />
+      </div>
+      <div className="flex flex-1 flex-col space-y-4">
+        <div className="flex flex-1">
+          <div className="flex flex-1 justify-between gap-x-1 text-base">
+            <span className="font-bold text-barcelona-primary-text">
+              @{username}
+            </span>
+            <span className="text-sm font-medium text-barcelona-secondary-text">
+              {date}
+            </span>
+          </div>
+          <div className="">{/* <DropdownMenuDemo /> */}</div>
+        </div>
+        <div
+          className={cn(
+            "relative block min-w-0 max-w-full overflow-y-visible whitespace-pre-line break-words text-sm text-barcelona-primary-text before:block before:h-0 before:content-[''] after:block after:h-0 after:content-[''] md:text-base",
+            // "text-sm text-barcelona-primary-text md:py-2 md:text-base",
+            caption === "" ? "hidden" : ""
+          )}
+        >
+          {caption}
+        </div>
+        {children}
+        <div>
+          <div className="flex gap-x-10 text-base text-slate-100 xl:gap-x-14 [&_li:first-child]:hidden [&_li:first-child]:lg:flex [&_li:xl]:gap-x-3 [&_li]:flex [&_li]:items-center [&_li]:gap-x-2 ">
+            <Link
+              href={downloadable || ""}
+              target="_blank"
+              className={cn(
+                buttonVariants({ variant: "default" }),
+                "w-full rounded-3xl bg-opacity-70 text-opacity-100"
+              )}
+            >
+              Download
+            </Link>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
