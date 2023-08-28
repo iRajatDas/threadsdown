@@ -342,7 +342,7 @@ const Post = ({
           alt="rajatdas.me's profile picture"
           className="origin-center rounded-full object-cover"
           crossOrigin="anonymous"
-          src="https://scontent.cdninstagram.com/v/t51.2885-19/357834101_977883033280721_3449271728947456340_n.jpg?stp=dst-jpg_s150x150&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=105&amp;_nc_ohc=TIsz2OnSVLkAX-hiUTe&amp;edm=APs17CUBAAAA&amp;ccb=7-5&amp;oh=00_AfDfK8lfnAcHfe9DyZUm408kHnUDhxflp6x7feupohlBwg&amp;oe=64E1B1A2&amp;_nc_sid=10d13b"
+          src={src}
         />
       </div>
       <div className="flex flex-1 flex-col space-y-4">
