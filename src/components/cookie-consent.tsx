@@ -50,15 +50,14 @@ const CookieConsent = () => {
           <div className="flex items-start space-x-1 rounded-lg border border-barcelona-elevated-border bg-barcelona-elevated-background/70 px-5 py-3 backdrop-blur md:items-stretch md:space-x-2">
             <div className="flex flex-1 items-center text-barcelona-primary-text">
               <p className="text-[0.645rem] font-medium md:text-xs">
-                Site uses cookies for better experience, traffic analysis; check
-                privacy policy for service info{" "}
+                Site uses cookies for better experience, traffic analysis; check{" "}
                 <Link
                   href="/privacy-policy"
                   className="text-[0.645rem] underline md:text-xs"
                 >
                   privacy policy
-                </Link>
-                .
+                </Link>{" "}
+                for service info.
               </p>
             </div>
             <div className="flex shrink-0 items-center">
