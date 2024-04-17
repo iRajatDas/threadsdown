@@ -39,7 +39,7 @@ export function maybeTruncateTextBlock(textBlock: string, charLimit: number) {
 }
 
 export function absoluteUrl(path: string) {
-  return `${process.env.NEXT_PUBLIC_APP_URL}${path}`;
+  return `${process.env.NEXT_PUBLIC_APP_URL}/${path}`;
 }
 
 export function timeAgo(unixTimestamp: number): string {

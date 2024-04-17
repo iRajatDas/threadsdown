@@ -37,7 +37,7 @@ const Footer = () => {
         </Link>
       </p>
       <p className="to-barcelona-secondary-text text-center text-sm">
-        Not affiliated with Meta or Threads
+        Not affiliated with Meta, Threads or any 3rd party.
       </p>
     </footer>
   );

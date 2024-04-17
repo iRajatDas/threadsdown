@@ -6,7 +6,15 @@ const CDN = process.env.NEXT_PUBLIC_APP_CDN;
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: [CDN, "scontent.cdninstagram.com"],
+    // domains: [CDN, "scontent.cdninstagram.com"],
+    remotePatterns: [
+      {
+        hostname: CDN ?? "https://cdn.instathreadsdown.com/",
+      },
+      {
+        hostname: "scontent.cdninstagram.com",
+      },
+    ],
   },
 };
 

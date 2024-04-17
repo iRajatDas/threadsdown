@@ -1,3 +1,6 @@
+import { absoluteUrl } from "@/lib/utils";
+import Link from "next/link";
+
 const FAQSection = async () => {
   return (
     <div className="mt-10 space-y-4 px-default py-4">
@@ -40,9 +43,10 @@ const FAQSection = async () => {
             </h2>
             <div className="">
               <p className="z-20 mt-4 text-sm text-zinc-400 duration-1000 group-hover:text-zinc-200">
-                Sure. InstaThreadsDown has the tool for saving images, IGTV,
-                Stories along with videos. It works just the same, you just need
-                to insert a link to the content.
+                Sure. InstaThreadsDown has the{" "}
+                <Link href={absoluteUrl("tools")} className="underline">tool for saving images</Link>{" "}
+                , IGTV, Stories along with videos. It works just the same, you
+                just need to insert a link to the content.
               </p>
             </div>
           </article>
