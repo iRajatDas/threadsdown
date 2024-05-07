@@ -277,7 +277,9 @@ const _getMedia = (thread: ThreadItem) => {
     const photos = media.carousel_media
       .filter(
         (item) =>
-          item.image_versions2 && item.image_versions2.candidates.length > 0
+          item.image_versions2 &&
+          item.image_versions2.candidates.length > 0 &&
+          item.video_versions === null
       )
       .map((item) => ({
         url: item.image_versions2.candidates[0].url,
