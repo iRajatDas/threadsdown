@@ -64,7 +64,7 @@ const ThreadsSection = () => {
                   >
                     <div
                       className={cn(
-                        "min-h-{20rem} relative mb-4 w-1/2 sm:w-1/3 md:w-1/2",
+                        "min-h-[20rem] lg:min-h-[36rem] relative mb-4 w-1/2 sm:w-1/3 md:w-1/2",
                         thumbnail ? "z-10" : ""
                       )}
                     >
@@ -99,7 +99,7 @@ const ThreadsSection = () => {
                   >
                     <div
                       className={cn(
-                        "min-h-{20rem} relative mb-4 w-full rounded-3xl border border-barcelona-elevated-border/10 sm:w-1/3 md:w-1/2 lg:w-3/4 xl:w-1/2 select-none",
+                        "min-h-[20rem] lg:min-h-[36rem] relative mb-4 w-full rounded-3xl border border-barcelona-elevated-border/10 sm:w-1/3 md:w-1/2 lg:w-3/4 xl:w-1/2 select-none",
                         thumbnail ? "z-10" : ""
                       )}
                     >
@@ -133,7 +133,7 @@ const ThreadsSection = () => {
                             >
                               <div
                                 className={cn(
-                                  "min-h-{20rem} relative mb-4 w-1/2 sm:w-1/3 md:w-1/2",
+                                  "min-h-[20rem] lg:min-h-[36rem] relative mb-4 w-1/2 sm:w-1/3 md:w-1/2",
                                   thumbnail ? "z-10" : ""
                                 )}
                               >
@@ -172,7 +172,7 @@ const ThreadsSection = () => {
                           >
                             <div
                               className={cn(
-                                "min-h-{20rem} relative mb-4 w-1/2 sm:w-1/3 md:w-1/2",
+                                "min-h-[20rem] lg:min-h-[36rem] relative mb-4 w-1/2 sm:w-1/3 md:w-1/2",
                                 thumbnail ? "z-10" : ""
                               )}
                             >
@@ -207,7 +207,7 @@ const ThreadsSection = () => {
                           >
                             <div
                               className={cn(
-                                "min-h-{20rem} relative mb-4 w-1/2 sm:w-1/3 md:w-1/2",
+                                "min-h-[20rem] lg:min-h-[36rem] relative mb-4 w-1/2 sm:w-1/3 md:w-1/2",
                                 thumbnail ? "z-10" : "",
                                 isPortrait(height, width)
                                   ? `${height}`
@@ -252,7 +252,7 @@ const ThreadsSection = () => {
                           >
                             <div
                               className={cn(
-                                "min-h-{20rem} relative mb-4 w-1/2 sm:w-1/3 md:w-1/2",
+                                "min-h-[20rem] lg:min-h-[36rem] relative mb-4 w-1/2 sm:w-1/3 md:w-1/2",
                                 thumbnail ? "z-10" : ""
                               )}
                             >
