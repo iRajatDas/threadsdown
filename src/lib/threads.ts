@@ -443,12 +443,42 @@ const getUserID = async (username: string): Promise<string | null> => {
 };
 
 export const getUserProfile = async (username: string): Promise<any | null> => {
+  if (!username) {
+    return null;
+  }
+  if (username.includes("@")) {
+    username = username.split("@")[1];
+  }
   const userID = await getUserID(username);
 
   if (!userID) {
     return null;
   }
 
-  const user = await threadsAPI.getUserProfile(userID);
+  const { data: user } = await axios.request<Response>({
+    method: "POST",
+    data: `av=0&__user=0&__a=1&__req=b&__hs=19850.HYP%3Abarcelona_web_pkg.2.1..0.0&dpr=2&__ccg=UNKNOWN&__rev=1013317019&__s=jzrc5v%3Alpswz9%3Adlxg5w&__hsi=7366197960413281514&__dyn=7xeUmwlEnwn8K2Wmh0cm5U4e0yoW3q32360CEbo1nEhw2nVE4W0om782Cw8G11wBz81s8hwGwQw9m1YwBgao6C0Mo2swlo5qfK0EUjwGzE2swwwNwKwHw8Xxm16wa-7U88138bodEGdwtU2ewbS1LwTwKG0hq1Iwqo9EpwUwiVUdGgkyU8UaUuxq328Dxd1W&__csr=giVIyrKVaSHGoyFV5z4A8ltKJWzKfAy_XypuczU01FFEcu9gryzwkE2OXbeE_5X6Ei0hKu2O12BtxC51m9BsBaelpUEk15yGa0Eo2twPy8GOezjxi06aGx50&__comet_req=29&lsd=AVoQDUacqkU&jazoest=2997&__spin_r=1013317019&__spin_b=trunk&__spin_t=1715076611&__jssesw=1&fb_api_caller_class=RelayModern&fb_api_req_friendly_name=BarcelonaUsernameHoverCardImplQuery&variables=%7B%22username%22%3A%22rajatdas.me%22%2C%22__relay_internal__pv__BarcelonaShouldShowFediverseM075Featuresrelayprovider%22%3Afalse%7D&server_timestamps=true&doc_id=7394812507255098`,
+
+    url: BASE_API_URL,
+    headers: {
+      "X-Ig-App-Id": "238260118697367",
+      // "User-Agent":
+      //   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.118 Safari/537.36",
+      "X-Fb-Friendly-Name": "BarcelonaUsernameHoverCardImplQuery",
+      "X-Fb-Lsd": "AVoQDUacqkU",
+      "Content-Type": "application/x-www-form-urlencoded",
+      "X-Asbd-Id": "129477",
+      "X-Csrftoken": "vrvgLsdLxPZKXjssLy5rN3",
+      // Origin: "https://www.threads.net",
+      // "Sec-Fetch-Site": "same-origin",
+      // "Sec-Fetch-Mode": "cors",
+      // "Sec-Fetch-Dest": "empty",
+      // Referer: "https://www.threads.net/@rajatdas.me/post/C6qLAuBPwOi",
+      // "Accept-Encoding": "gzip, deflate, br",
+      // "Accept-Language": "en-GB,en-US;q=0.9,en;q=0.8",
+      // Priority: "u=1, i",
+    },
+  });
+
   return user || null;
 };
