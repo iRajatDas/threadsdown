@@ -69,7 +69,7 @@ export function QueryForm({ type = "getThreads" }: QueryType) {
         itemID: "t",
       });
 
-      process.env.NODE_ENV === "production" ? await sleep(3000, 6000) : null;
+      process.env.NODE_ENV === "production" ? await sleep(5000, 10000) : null;
 
       if (
         threads.hasOwnProperty("media") ||
