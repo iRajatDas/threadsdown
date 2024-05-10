@@ -34,7 +34,10 @@ const PhotoDownloader = async () => {
     .splice(0, 4);
   return (
     <>
-      <EntrySection />
+      <EntrySection
+        title="Threads Photos Downloader"
+        description="Download Photos, Videos & DP from Threads"
+      />
       <FormSection />
       <ThreadsSection />
       <AlertSection />

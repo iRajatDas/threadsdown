@@ -34,7 +34,10 @@ const VideoDownloader = async () => {
     .splice(0, 4);
   return (
     <>
-      <EntrySection />
+      <EntrySection
+        title="Threads Downloader"
+        description="Download Videos, Photos & DP from Threads"
+      />
       <FormSection />
       <ThreadsSection />
       <AlertSection />
