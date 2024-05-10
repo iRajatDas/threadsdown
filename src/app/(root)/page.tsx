@@ -1,8 +1,8 @@
 import React from "react";
-import EntrySection from "./components/section-entry";
-import FormSection from "./components/section-from";
-import AlertSection from "./components/section-alert";
-import FAQSection from "./components/section-faq";
+import EntrySection from "@/app/components/section-entry";
+import FormSection from "@/app/components/section-from";
+import AlertSection from "@/app/components/section-alert";
+import FAQSection from "@/app/components/section-faq";
 
 // import { allPosts } from "";
 import { compareDesc } from "date-fns";
@@ -13,7 +13,7 @@ import { allPosts } from "contentlayer/generated";
 import { LuChevronRight } from "react-icons/lu";
 import { buttonVariants } from "@/components/ui/button";
 import { Metadata } from "next";
-import ThreadsSection from "./components/section-threads";
+import ThreadsSection from "../components/section-threads";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL as string),

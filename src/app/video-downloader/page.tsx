@@ -1,9 +1,9 @@
 import React from "react";
-import EntrySection from "../components/section-entry";
-import FormSection from "../components/section-from";
-import AlertSection from "../components/section-alert";
-import FAQSection from "../components/section-faq";
-import ThreadsSection from "../components/section-threads";
+import EntrySection from "@/app/components/section-entry";
+import FormSection from "@/app/components/section-from";
+import AlertSection from "@/app/components/section-alert";
+import FAQSection from "@/app/components/section-faq";
+import ThreadsSection from "@/app/components/section-threads";
 
 // import { allPosts } from "";
 import { compareDesc } from "date-fns";
@@ -14,19 +14,18 @@ import { allPosts } from "contentlayer/generated";
 import { LuChevronRight } from "react-icons/lu";
 import { buttonVariants } from "@/components/ui/button";
 import { Metadata } from "next";
-import { InstagramProfileCard } from "./components/cards";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL as string),
-  title: "Download DP, Photos & Videos from Threads",
+  title: "Download Videos, Photos & DP from Threads",
   description:
-    "Threads DP Photos Downloader is a tool to download DP, Photos & Videos from Threads. No Limit Downloads.",
+    "Threads Downloader is a tool to download Videos, Photos & DP from Threads. No Limit Downloads.",
   alternates: {
-    canonical: "/dp-downloader",
+    canonical: "/video-downloader",
   },
 };
 
-const DpDownloader = async () => {
+const VideoDownloader = async () => {
   const posts = allPosts
     .filter((post) => post.published)
     .sort((a, b) => {
@@ -36,8 +35,7 @@ const DpDownloader = async () => {
   return (
     <>
       <EntrySection />
-      <FormSection type="getUserProfile" />
-      <InstagramProfileCard />
+      <FormSection />
       <ThreadsSection />
       <AlertSection />
       <FAQSection />
@@ -64,7 +62,12 @@ const DpDownloader = async () => {
                         priority={index <= 1}
                       />
                     )}
-                    <h2 className="text-2xl font-extrabold line-clamp-2" title={post.title}>{post.title}</h2>
+                    <h2
+                      className="line-clamp-2 text-2xl font-extrabold"
+                      title={post.title}
+                    >
+                      {post.title}
+                    </h2>
                     {post.description && (
                       <p className="line-clamp-3 text-muted-foreground">
                         {post.description}
@@ -104,4 +107,4 @@ const DpDownloader = async () => {
   );
 };
 
-export default DpDownloader;
+export default VideoDownloader;

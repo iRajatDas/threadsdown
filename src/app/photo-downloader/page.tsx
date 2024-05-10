@@ -1,9 +1,9 @@
 import React from "react";
-import EntrySection from "../components/section-entry";
-import FormSection from "../components/section-from";
-import AlertSection from "../components/section-alert";
-import FAQSection from "../components/section-faq";
-import ThreadsSection from "../components/section-threads";
+import EntrySection from "@/app/components/section-entry";
+import FormSection from "@/app/components/section-from";
+import AlertSection from "@/app/components/section-alert";
+import FAQSection from "@/app/components/section-faq";
+import ThreadsSection from "@/app/components/section-threads";
 
 // import { allPosts } from "";
 import { compareDesc } from "date-fns";
