@@ -16,9 +16,12 @@ import { Metadata } from "next";
 import ThreadsSection from "@/app/components/section-threads";
 
 export const metadata: Metadata = {
+  title: "Insta DP Viewer & Instagram DP Downloader | HD Quality",
+  description:
+    "Save Instagram Profile Picture with HD quality & fast online tool. Insta dp viewer is a 100% free best Instagram Profile downloader.",
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL as string),
   alternates: {
-    canonical: "/",
+    canonical: "/ig/insta-dp-viewer",
   },
 };
 
@@ -84,8 +87,8 @@ const Homepage = async () => {
             difficult until we didn’t launch our tool. Our tool is solving you
             all problem regarding downloading any Instagram DP. Downloading
             Instagram DP is really simple to work you just copy the profile URL
-            and paste it inside the input box of InstaThreadsDown and click the search
-            button.
+            and paste it inside the input box of InstaThreadsDown and click the
+            search button.
           </p>
           <p>
             We offer you 2 options after pasting the profile URL. First is the
