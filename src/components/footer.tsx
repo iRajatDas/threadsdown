@@ -25,16 +25,22 @@ const Footer = () => {
             </li>
           );
         })}
+
+        <li>
+          <Link href="/contact">Instagram DP</Link>
+        </li>
       </ul>
       <p className="text-center text-sm">
-        {/* © 2023{" "}
-        <Link href={"/"} className="text-barcelona-link-text">
-          InstaThreadsDown
-        </Link> */}
         <span>Give us a follow 👉 </span>
         <Link href={"/"} className="text-barcelona-primary-text">
           @rajatdas.me
         </Link>
+        <span className="block">
+          © 2023 - 2024{" "}
+          <Link href={"/"} className="text-barcelona-link-text">
+            InstaThreadsDown
+          </Link>
+        </span>
       </p>
       <p className="to-barcelona-secondary-text text-center text-sm">
         Not affiliated with Meta, Threads or any 3rd party.
