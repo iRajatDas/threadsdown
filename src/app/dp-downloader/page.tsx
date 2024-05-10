@@ -18,9 +18,9 @@ import { InstagramProfileCard } from "./components/cards";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL as string),
-  title: "Download DP, Photos & Videos from Threads",
+  title: "Insta Threads DP Viewer & Instagram DP Downloader | HD Quality",
   description:
-    "Threads DP Photos Downloader is a tool to download DP, Photos & Videos from Threads. No Limit Downloads.",
+    "Save Thredas Profile Picture with HD & free online tool. Insta dp viewer is a 100% free best Instagram Threads DP Profile downloader.",
   alternates: {
     canonical: "/dp-downloader",
   },
@@ -35,7 +35,10 @@ const DpDownloader = async () => {
     .splice(0, 4);
   return (
     <>
-      <EntrySection />
+      <EntrySection
+        title="Threads DP Downloader"
+        description="Download DP, Photos & Videos from Threads"
+      />
       <FormSection type="getUserProfile" />
       <InstagramProfileCard />
       <ThreadsSection />
@@ -64,7 +67,12 @@ const DpDownloader = async () => {
                         priority={index <= 1}
                       />
                     )}
-                    <h2 className="text-2xl font-extrabold line-clamp-2" title={post.title}>{post.title}</h2>
+                    <h2
+                      className="line-clamp-2 text-2xl font-extrabold"
+                      title={post.title}
+                    >
+                      {post.title}
+                    </h2>
                     {post.description && (
                       <p className="line-clamp-3 text-muted-foreground">
                         {post.description}
