@@ -27,7 +27,7 @@ const Footer = () => {
         })}
 
         <li>
-          <Link href="/contact">Instagram DP</Link>
+          <Link href="/ig/insta-dp-viewer">Instagram DP</Link>
         </li>
       </ul>
       <p className="text-center text-sm">
