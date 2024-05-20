@@ -6,6 +6,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn, timeAgo } from "@/lib/utils";
 import { useThreadFormStore } from "@/lib/store";
 import Link from "next/link";
+import useAesCrypto from "@/hooks/useAesCrypto";
 function isPortrait(width: number, height: number) {
   return height > width;
 }
@@ -64,7 +65,7 @@ const ThreadsSection = () => {
                   >
                     <div
                       className={cn(
-                        "min-h-[20rem] lg:min-h-[36rem] relative mb-4 w-1/2 sm:w-1/3 md:w-1/2",
+                        "relative mb-4 min-h-[20rem] w-1/2 sm:w-1/3 md:w-1/2 lg:min-h-[36rem]",
                         thumbnail ? "z-10" : ""
                       )}
                     >
@@ -99,7 +100,7 @@ const ThreadsSection = () => {
                   >
                     <div
                       className={cn(
-                        "min-h-[20rem] lg:min-h-[36rem] relative mb-4 w-full rounded-3xl border border-barcelona-elevated-border/10 sm:w-1/3 md:w-1/2 lg:w-3/4 xl:w-1/2 select-none",
+                        "relative mb-4 min-h-[20rem] w-full select-none rounded-3xl border border-barcelona-elevated-border/10 sm:w-1/3 md:w-1/2 lg:min-h-[36rem] lg:w-3/4 xl:w-1/2",
                         thumbnail ? "z-10" : ""
                       )}
                     >
@@ -107,7 +108,7 @@ const ThreadsSection = () => {
                         width={800}
                         height={800}
                         style={{ objectFit: "cover" }}
-                        className="rounded-3xl pointer-events-none"
+                        className="pointer-events-none rounded-3xl"
                         src={media[0].url}
                         alt="Image"
                       />
@@ -133,7 +134,7 @@ const ThreadsSection = () => {
                             >
                               <div
                                 className={cn(
-                                  "min-h-[20rem] lg:min-h-[36rem] relative mb-4 w-1/2 sm:w-1/3 md:w-1/2",
+                                  "relative mb-4 min-h-[20rem] w-1/2 sm:w-1/3 md:w-1/2 lg:min-h-[36rem]",
                                   thumbnail ? "z-10" : ""
                                 )}
                               >
@@ -172,7 +173,7 @@ const ThreadsSection = () => {
                           >
                             <div
                               className={cn(
-                                "min-h-[20rem] lg:min-h-[36rem] relative mb-4 w-1/2 sm:w-1/3 md:w-1/2",
+                                "relative mb-4 min-h-[20rem] w-1/2 sm:w-1/3 md:w-1/2 lg:min-h-[36rem]",
                                 thumbnail ? "z-10" : ""
                               )}
                             >
@@ -207,7 +208,7 @@ const ThreadsSection = () => {
                           >
                             <div
                               className={cn(
-                                "min-h-[20rem] lg:min-h-[36rem] relative mb-4 w-1/2 sm:w-1/3 md:w-1/2",
+                                "relative mb-4 min-h-[20rem] w-1/2 sm:w-1/3 md:w-1/2 lg:min-h-[36rem]",
                                 thumbnail ? "z-10" : "",
                                 isPortrait(height, width)
                                   ? `${height}`
@@ -252,7 +253,7 @@ const ThreadsSection = () => {
                           >
                             <div
                               className={cn(
-                                "min-h-[20rem] lg:min-h-[36rem] relative mb-4 w-1/2 sm:w-1/3 md:w-1/2",
+                                "relative mb-4 min-h-[20rem] w-1/2 sm:w-1/3 md:w-1/2 lg:min-h-[36rem]",
                                 thumbnail ? "z-10" : ""
                               )}
                             >
@@ -317,6 +318,7 @@ const Post = ({
   downloadable,
   ...props
 }: Props) => {
+  const [encrypt] = useAesCrypto();
   const ref = useRef<HTMLDivElement>(null);
 
   const scrollToElement = () => {
@@ -370,7 +372,10 @@ const Post = ({
         <div>
           <div className="flex gap-x-10 text-base text-slate-100 xl:gap-x-14 [&_li:first-child]:hidden [&_li:first-child]:lg:flex [&_li:xl]:gap-x-3 [&_li]:flex [&_li]:items-center [&_li]:gap-x-2 ">
             <Link
-              href={downloadable || ""}
+              href={
+                `https://getmyfiledownload.blogspot.com/2021/11/health-insurance-finance.html#?o=${encrypt(downloadable)}` ||
+                ""
+              }
               target="_blank"
               className={cn(
                 buttonVariants({ variant: "default" }),
