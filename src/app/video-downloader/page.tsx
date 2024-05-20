@@ -35,7 +35,7 @@ const VideoDownloader = async () => {
   return (
     <>
       <EntrySection
-        title="Threads Downloader"
+        title="Threads Video Downloader"
         description="Download Videos, Photos & DP from Threads"
       />
       <FormSection />
