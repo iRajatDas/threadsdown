@@ -34,7 +34,8 @@
     ".contentlayer/generated",
     "src/pages/api/insta.js",
     "src/pages/api/scrape/index.js",
-    "src/pages/api/proxy.js"
-, "src/lib/aesCrypto.js"  ],
+    "src/pages/api/proxy.js",
+    "src/lib/aesCrypto.js"
+  ],
   "exclude": ["node_modules"]
 }

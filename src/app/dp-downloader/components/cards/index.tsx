@@ -58,7 +58,8 @@ export const InstagramProfileCard = () => {
                       {profileData?.data?.xdt_user_by_username?.full_name}
                     </h2>
                     <span className="block max-w-full overflow-x-hidden overflow-y-hidden text-ellipsis whitespace-nowrap text-barcelona-secondary-text">
-                      {profileData?.data?.xdt_user_by_username?.follower_count} followers
+                      {profileData?.data?.xdt_user_by_username?.follower_count}{" "}
+                      followers
                     </span>
                   </div>
                   <div className="mt-1 block">
@@ -97,9 +98,12 @@ export const InstagramProfileCard = () => {
                           alt={`${profileData?.data?.xdt_user_by_username?.username}'s profile picture`}
                           className="origin-center rounded-full object-cover"
                           src={
-                            profileData?.data?.xdt_user_by_username?.hd_profile_pic_versions[1].url ??
-                            profileData?.data?.xdt_user_by_username?.hd_profile_pic_versions[0].url ??
-                            profileData?.data?.xdt_user_by_username?.profile_pic_url
+                            profileData?.data?.xdt_user_by_username
+                              ?.hd_profile_pic_versions[1].url ??
+                            profileData?.data?.xdt_user_by_username
+                              ?.hd_profile_pic_versions[0].url ??
+                            profileData?.data?.xdt_user_by_username
+                              ?.profile_pic_url
                           }
                         />
                       </div>
@@ -110,7 +114,10 @@ export const InstagramProfileCard = () => {
 
               <div className="mt-4">
                 <span className="relative block min-w-0 max-w-full overflow-y-visible whitespace-pre-line break-words text-system-15 text-barcelona-primary-text before:block before:h-0 before:content-[''] after:block after:h-0 after:content-['']">
-                  {profileData?.data?.xdt_user_by_username?.biography_with_entities.raw_text}
+                  {
+                    profileData?.data?.xdt_user_by_username
+                      ?.biography_with_entities.raw_text
+                  }
                 </span>
               </div>
             </div>
@@ -123,8 +130,10 @@ export const InstagramProfileCard = () => {
                 "w-full rounded-3xl px-default"
               )}
               href={`${process.env.NEXT_PUBLIC_APP_CDN}/${encodeURIComponent(
-                profileData?.data?.xdt_user_by_username?.hd_profile_pic_versions[1].url ??
-                  profileData?.data?.xdt_user_by_username?.hd_profile_pic_versions[0].url ??
+                profileData?.data?.xdt_user_by_username
+                  ?.hd_profile_pic_versions[1].url ??
+                  profileData?.data?.xdt_user_by_username
+                    ?.hd_profile_pic_versions[0].url ??
                   profileData?.data?.xdt_user_by_username?.profile_pic_url
               )}`}
             >

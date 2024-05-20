@@ -7,7 +7,7 @@ import { Navigation } from "./nav";
 
 const Header = () => {
   return (
-    <div className="flex h-header-size shrink-0 items-center justify-between px-default lg:py-10 lg:mt-10">
+    <div className="flex h-header-size shrink-0 items-center justify-between px-default lg:mt-10 lg:py-10">
       <Link href={"/"} className="group flex">
         <div
           className="mr-2 select-none transition-all duration-150 ease-in-out group-hover:scale-105"
@@ -24,7 +24,7 @@ const Header = () => {
       {/* <Button size="icon">
         <LuMenu className="h-5 w-5" />
       </Button> */}
-      <Navigation/>
+      <Navigation />
     </div>
   );
 };

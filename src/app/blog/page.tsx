@@ -51,7 +51,12 @@ export default async function BlogPage() {
                   priority={index <= 1}
                 />
               )}
-              <h2 className="text-2xl font-extrabold line-clamp-2" title={post.title}>{post.title}</h2>
+              <h2
+                className="line-clamp-2 text-2xl font-extrabold"
+                title={post.title}
+              >
+                {post.title}
+              </h2>
               {post.description && (
                 <p className="line-clamp-3 text-muted-foreground">
                   {post.description}

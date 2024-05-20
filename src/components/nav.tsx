@@ -84,12 +84,12 @@ export function Navigation() {
                 </SheetClose>
               </li>
             </ul>
-            <div className="mt-10 flex lg:items-center flex-col lg:flex-row gap-4 lg:mt-5">
+            <div className="mt-10 flex flex-col gap-4 lg:mt-5 lg:flex-row lg:items-center">
               {/* <SheetClose asChild>
                 <Button type="submit">Close</Button>
               </SheetClose> */}
               <p>Pages: </p>
-              <ul className="flex flex-col lg:items-center lg:space-x-4 font-medium text-barcelona-secondary-text lg:flex-row">
+              <ul className="flex flex-col font-medium text-barcelona-secondary-text lg:flex-row lg:items-center lg:space-x-4">
                 {sortedPages.map((page) => {
                   let title: string;
                   if (
