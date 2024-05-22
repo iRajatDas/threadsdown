@@ -369,7 +369,7 @@ const Post = ({
           {caption}
         </div>
         {children}
-        <div>
+        <div className="space-y-2.5">
           <div className="flex gap-x-10 text-base text-slate-100 xl:gap-x-14 [&_li:first-child]:hidden [&_li:first-child]:lg:flex [&_li:xl]:gap-x-3 [&_li]:flex [&_li]:items-center [&_li]:gap-x-2 ">
             <Link
               href={
@@ -384,6 +384,22 @@ const Post = ({
             >
               Download
             </Link>
+          </div>
+          <div
+            id="div-ad-1716378510"
+            className="relative mx-auto mb-4"
+            style={{ maxWidth: "728px" }}
+          >
+            <Link
+              href="https://go.nordvpn.net/aff_c?offer_id=15&aff_id=105447&url_id=902"
+              className="absolute inset-0"
+            />
+            <Image
+              src="/images/third-party/affiliate-spring-campaign-728x90.png"
+              alt="affiliate-spring-campaign-728x90"
+              width={728}
+              height={90}
+            />
           </div>
         </div>
       </div>
