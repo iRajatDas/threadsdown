@@ -395,7 +395,7 @@ const Post = ({
               className="absolute inset-0"
             />
             <Image
-              src="/images/third-party/affiliate-spring-campaign-728x90.png"
+              src="/images/third-party/ndvpn-affiliate-spring-campaign-728x90.png"
               alt="affiliate-spring-campaign-728x90"
               width={728}
               height={90}

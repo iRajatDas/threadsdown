@@ -20,9 +20,10 @@ const FormSection: FC<QueryType> = ({ type = "getThreads" }) => {
         <Link
           href="https://go.nordvpn.net/aff_c?offer_id=15&aff_id=105447&url_id=902"
           className="absolute inset-0"
+          rel="sponsored"
         />
         <Image
-          src="/images/third-party/affiliate-spring-campaign-728x90.png"
+          src="/images/third-party/ndvpn-affiliate-spring-campaign-728x90.png"
           alt="affiliate-spring-campaign-728x90"
           width={728}
           height={90}
