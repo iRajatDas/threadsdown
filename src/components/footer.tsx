@@ -1,4 +1,5 @@
 import { absoluteUrl } from "@/lib/utils";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { allPages } from "contentlayer/generated";
 import Link from "next/link";
 import React from "react";
@@ -39,6 +40,14 @@ const Footer = () => {
           © 2023 - 2024{" "}
           <Link href={"/"} className="text-barcelona-link-text">
             InstaThreadsDown
+          </Link>
+        </span>
+        <span className="block">
+          <Link
+            href={"https://github.com/iRajatDas"}
+            className="inline-flex items-center py-2 gap-1 text-barcelona-primary-text"
+          >
+            <GitHubLogoIcon /> GitHub
           </Link>
         </span>
       </p>
