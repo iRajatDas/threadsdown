@@ -96,6 +96,9 @@ export const metadata: Metadata = {
   //   // apple: "/apple-touch-icon.png",
   // },
   manifest: `${siteConfig.url}/site.webmanifest`,
+  other: {
+    "google-adsense-account": "ca-pub-8625576877801526",
+  },
 };
 
 export default function RootLayout({
