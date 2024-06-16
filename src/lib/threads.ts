@@ -438,7 +438,7 @@ export const getAllMedia = async (url: string): Promise<any> => {
 };
 
 const getUserID = async (username: string): Promise<string | null> => {
-  const userID = await threadsAPI.getUserIDfromUsername(username);
+  const userID = await threadsAPI.getUserIDfromUsernameWithInstagram(username);
   return userID || null;
 };
 
