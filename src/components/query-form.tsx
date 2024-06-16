@@ -45,7 +45,7 @@ export function QueryForm({ type = "getThreads" }: QueryType) {
       .regex(
         type === "getThreads"
           ? /^(https:\/\/www\.threads\.net\/(@[\w.-]+\/post|t)\/[A-Za-z0-9_-]+)(\/\?[\w=&-]+)?$/
-          : /^[a-zA-Z0-9](?!.*\.\.)(?!.*\.$)[\w.]{1,28}[a-zA-Z0-9_]$/,
+          : /^@?[a-zA-Z0-9](?!.*\.\.)(?!.*\.$)[\w.]{0,28}[a-zA-Z0-9]$/,
         type === "getThreads"
           ? "Please enter a valid threads post link."
           : "Enter a valid username."
@@ -140,6 +140,38 @@ export function QueryForm({ type = "getThreads" }: QueryType) {
                   rows={1}
                   cols={5}
                   {...field}
+                  onKeyDown={(e) => {
+                    // prevent new line
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      return;
+                    }
+                  }}
+                  onPaste={(e) => {
+                    // prevent pasting multiple lines, merge them into one
+                    e.preventDefault();
+                    const text = e.clipboardData.getData("text/plain");
+
+                    // Replace multiple newlines with a single space and trim leading/trailing spaces
+                    const singleLineText = text.replace(/\s+/g, " ").trim();
+
+                    // Insert the processed text at the cursor position
+                    const textarea = e.target as HTMLTextAreaElement;
+                    const start = textarea.selectionStart;
+                    const end = textarea.selectionEnd;
+
+                    const before = textarea.value.substring(0, start);
+                    const after = textarea.value.substring(end);
+
+                    textarea.value = before + singleLineText + after;
+
+                    // Update the caret position
+                    const newCaretPosition = start + singleLineText.length;
+                    textarea.setSelectionRange(
+                      newCaretPosition,
+                      newCaretPosition
+                    );
+                  }}
                 />
               </FormControl>
               <FormMessage />

@@ -11,7 +11,7 @@ import { useLayoutEffect, useState } from "react";
 export const InstagramProfileCard = () => {
   const [profileData, setProfileData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  console.log(profileData);
+  // console.log(profileData);
 
   const threads = useThreadFormStore((state) => state.threads);
 
