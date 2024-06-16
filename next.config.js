@@ -14,6 +14,9 @@ const nextConfig = {
       {
         hostname: "scontent.cdninstagram.com",
       },
+      {
+        hostname: "*.fbcdn.net",
+      },
     ],
   },
 };

@@ -11,6 +11,7 @@ import { useLayoutEffect, useState } from "react";
 export const InstagramProfileCard = () => {
   const [profileData, setProfileData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  console.log(profileData);
 
   const threads = useThreadFormStore((state) => state.threads);
 
@@ -47,7 +48,7 @@ export const InstagramProfileCard = () => {
           transition={{ duration: 1, type: "spring" }}
         >
           <div
-            key={profileData?.data?.xdt_user_by_username?.full_name}
+            key={profileData?.data?.user?.full_name}
             className="overflow-hidden rounded-lg px-default shadow-md"
           >
             <div className="rounded-2xl border border-barcelona-media-outline bg-barcelona-secondary-background px-default py-4 text-white">
@@ -55,11 +56,10 @@ export const InstagramProfileCard = () => {
                 <div className="col-start-1 col-end-auto">
                   <div className="relative flex flex-wrap items-center gap-4">
                     <h2 className="relative line-clamp-1 min-w-0 overflow-y-visible whitespace-pre-line break-words text-system-24 font-bold text-barcelona-primary-text">
-                      {profileData?.data?.xdt_user_by_username?.full_name}
+                      {profileData?.data?.user?.full_name}
                     </h2>
                     <span className="block max-w-full overflow-x-hidden overflow-y-hidden text-ellipsis whitespace-nowrap text-barcelona-secondary-text">
-                      {profileData?.data?.xdt_user_by_username?.follower_count}{" "}
-                      followers
+                      {profileData?.data?.user?.follower_count} followers
                     </span>
                   </div>
                   <div className="mt-1 block">
@@ -69,7 +69,7 @@ export const InstagramProfileCard = () => {
                         dir="auto"
                       >
                         <span className="block max-w-full overflow-x-hidden overflow-y-hidden text-ellipsis whitespace-nowrap">
-                          {profileData?.data?.xdt_user_by_username?.username}
+                          {profileData?.data?.user?.username}
                         </span>
                       </span>
                       <div className="ml-1">
@@ -95,15 +95,15 @@ export const InstagramProfileCard = () => {
                         <Image
                           height={84}
                           width={84}
-                          alt={`${profileData?.data?.xdt_user_by_username?.username}'s profile picture`}
+                          alt={`${profileData?.data?.user?.username}'s profile picture`}
                           className="origin-center rounded-full object-cover"
                           src={
-                            profileData?.data?.xdt_user_by_username
-                              ?.hd_profile_pic_versions[1].url ??
-                            profileData?.data?.xdt_user_by_username
-                              ?.hd_profile_pic_versions[0].url ??
-                            profileData?.data?.xdt_user_by_username
-                              ?.profile_pic_url
+                            profileData?.data?.user
+                              ?.hd_profile_pic_versions?.[1].url ??
+                            profileData?.data?.user
+                              ?.hd_profile_pic_versions?.[0].url ??
+                            profileData?.data?.user?.profile_pic_url_hd ??
+                            profileData?.data?.user?.profile_pic_url
                           }
                         />
                       </div>
@@ -114,10 +114,7 @@ export const InstagramProfileCard = () => {
 
               <div className="mt-4">
                 <span className="relative block min-w-0 max-w-full overflow-y-visible whitespace-pre-line break-words text-system-15 text-barcelona-primary-text before:block before:h-0 before:content-[''] after:block after:h-0 after:content-['']">
-                  {
-                    profileData?.data?.xdt_user_by_username
-                      ?.biography_with_entities.raw_text
-                  }
+                  {profileData?.data?.user?.biography_with_entities.raw_text}
                 </span>
               </div>
             </div>
@@ -130,11 +127,8 @@ export const InstagramProfileCard = () => {
                 "w-full rounded-3xl px-default"
               )}
               href={`${process.env.NEXT_PUBLIC_APP_CDN}/${encodeURIComponent(
-                profileData?.data?.xdt_user_by_username
-                  ?.hd_profile_pic_versions[1].url ??
-                  profileData?.data?.xdt_user_by_username
-                    ?.hd_profile_pic_versions[0].url ??
-                  profileData?.data?.xdt_user_by_username?.profile_pic_url
+                profileData?.data?.user?.profile_pic_url_hd ??
+                  profileData?.data?.user?.profile_pic_url
               )}`}
             >
               Download HD DP
