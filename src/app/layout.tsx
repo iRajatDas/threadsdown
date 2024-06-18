@@ -99,7 +99,7 @@ export const metadata: Metadata = {
   // },
   manifest: `${siteConfig.url}/site.webmanifest`,
   other: {
-    "google-adsense-account": "ca-pub-8625576877801526",
+    "google-adsense-account": "ca-pub-3641558149669921",
   },
 };
 
@@ -110,6 +110,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.variable}>
+      {/* AdSense */}
+      <Script
+        id="google-adsense"
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3641558149669921"
+        strategy="afterInteractive"
+      />
+
       <Script id="google-tag-manager" strategy="afterInteractive">
         {`
         (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
