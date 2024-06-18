@@ -385,7 +385,7 @@ const Post = ({
               Download
             </Link>
           </div>
-          <div
+          {/* <div
             id="div-ad-1716378510"
             className="relative mx-auto mb-4"
             style={{ maxWidth: "728px" }}
@@ -400,7 +400,7 @@ const Post = ({
               width={728}
               height={90}
             />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

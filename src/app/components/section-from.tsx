@@ -12,7 +12,7 @@ const FormSection: FC<QueryType> = ({ type = "getThreads" }) => {
   return (
     <div className="px-default py-4 shadow">
       {/* affiliate-spring-campaign-728x90 */}
-      <div
+      {/* <div
         id="div-ad-1716378510"
         className="relative mx-auto mb-4"
         style={{ maxWidth: "728px" }}
@@ -28,7 +28,7 @@ const FormSection: FC<QueryType> = ({ type = "getThreads" }) => {
           width={728}
           height={90}
         />
-      </div>
+      </div> */}
 
       <Tabs />
       <div className="mt-4 rounded-2xl border bg-barcelona-secondary-background px-default py-4">
