@@ -163,7 +163,10 @@ export function QueryForm({ type = "getThreads" }: QueryType) {
                     const before = textarea.value.substring(0, start);
                     const after = textarea.value.substring(end);
 
-                    textarea.value = before + singleLineText + after;
+                    form.setValue(
+                      "thread_url",
+                      before + singleLineText + after
+                    );
 
                     // Update the caret position
                     const newCaretPosition = start + singleLineText.length;
