@@ -1,4 +1,4 @@
-export const maxDuration = 120; // This function can run for a maximum of 5 seconds
+export const maxDuration = 60; // This function can run for a maximum of 5 seconds
 import { getUserProfile } from "@/lib/threads";
 
 export async function GET(request: Request) {
