@@ -164,11 +164,24 @@ interface Extensions {
   is_final: boolean;
 }
 
+// const threadsAPI = new ThreadsAPI({
+//   deviceID: "android-2vhi2rsxehy00000",
+//   username: "rajatdas.me",
+//   password: "rajatdas@123#S$",
+// });
+
 const threadsAPI = new ThreadsAPI({
-  deviceID: "android-2vhi2rsxehy00000",
+  deviceID: "android-tlbw5qmc48w0000",
   username: "rajatdas.me",
-  password: "rajatdas@123#S$",
+  // password: "rajatdas@123#S$",
+  token:
+    "eyJkc191c2VyX2lkIjoiNDE5NDQzNDIyOCIsInNlc3Npb25pZCI6IjQxOTQ0MzQyMjglM0E2bEJaY3B6bWZCWGp1ZSUzQTEwJTNBQVllNGswb3I2MGt2RW5pSEk4anBJUFFVMzhFZ1RtTUxtTFZJZGNtUlVBIn0=",
 });
+
+(async () => {
+  const token = await threadsAPI.getCurrentUserID();
+  console.log(token);
+})();
 
 const BASE_API_URL = "https://www.threads.net/api/graphql" as const;
 
