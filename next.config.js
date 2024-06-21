@@ -12,7 +12,7 @@ const nextConfig = {
         hostname: CDN ?? "https://cdn.instathreadsdown.com/",
       },
       {
-        hostname: "scontent.cdninstagram.com",
+        hostname: "**.cdninstagram.com",
       },
       {
         hostname: "*.fbcdn.net",
