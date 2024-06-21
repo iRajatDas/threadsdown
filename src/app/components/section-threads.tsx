@@ -7,6 +7,7 @@ import { cn, timeAgo } from "@/lib/utils";
 import { useThreadFormStore } from "@/lib/store";
 import Link from "next/link";
 import useAesCrypto from "@/hooks/useAesCrypto";
+import AdSenseAd from "@/components/ads/google-adsense";
 function isPortrait(width: number, height: number) {
   return height > width;
 }
@@ -370,6 +371,8 @@ const Post = ({
         </div>
         {children}
         <div className="space-y-2.5">
+          <AdSenseAd name="AB_FOLD_MEDIUM_RECTANGLE" className="mb-4" />
+
           <div className="flex gap-x-10 text-base text-slate-100 xl:gap-x-14 [&_li:first-child]:hidden [&_li:first-child]:lg:flex [&_li:xl]:gap-x-3 [&_li]:flex [&_li]:items-center [&_li]:gap-x-2 ">
             <Link
               href={
@@ -385,6 +388,7 @@ const Post = ({
               Download
             </Link>
           </div>
+
           {/* <div
             id="div-ad-1716378510"
             className="relative mx-auto mb-4"

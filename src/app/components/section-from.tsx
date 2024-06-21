@@ -1,3 +1,4 @@
+import AdSenseAd from "@/components/ads/google-adsense";
 import { QueryForm } from "@/components/query-form";
 import Tabs from "@/components/tabs";
 import Image from "next/image";
@@ -11,25 +12,7 @@ interface QueryType {
 const FormSection: FC<QueryType> = ({ type = "getThreads" }) => {
   return (
     <div className="px-default py-4 shadow">
-      {/* affiliate-spring-campaign-728x90 */}
-      {/* <div
-        id="div-ad-1716378510"
-        className="relative mx-auto mb-4"
-        style={{ maxWidth: "728px" }}
-      >
-        <Link
-          href="https://go.nordvpn.net/aff_c?offer_id=15&aff_id=105447&url_id=902"
-          className="absolute inset-0"
-          rel="sponsored"
-        />
-        <Image
-          src="/images/third-party/ndvpn-affiliate-spring-campaign-728x90.png"
-          alt="affiliate-spring-campaign-728x90"
-          width={728}
-          height={90}
-        />
-      </div> */}
-
+      <AdSenseAd name="AB_FOLD_MEDIUM_RECTANGLE" className="mb-4" />
       <Tabs />
       <div className="mt-4 rounded-2xl border bg-barcelona-secondary-background px-default py-4">
         <QueryForm type={type} />
