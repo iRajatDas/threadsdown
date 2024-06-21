@@ -437,10 +437,35 @@ export const getAllMedia = async (url: string): Promise<any> => {
   }
 };
 
-const getUserID = async (username: string) => {
-  const userID = await threadsAPI.getUserIDfromUsername(username);
+const getUserID = async (username) => {
+  // const response = await fetch(
+  //   "https://i.instagram.com/api/v1/users/web_profile_info/?username=therock",
+  //   {}
+  // );
+
+  const userID = await threadsAPI.getUserIDfromUsername(username, {
+    headers: {
+      Host: "www.threads.net",
+      Cookie:
+        "ps_n=1; ps_l=1; mid=Zje90AALAAFb05MGFRuHvs0jD-Vv; ig_did=91FF8093-4F6B-4C3C-A3B9-EC494D2A3E62; csrftoken=wcY95bJoztn2BmzzKlDoHzwqsHR6NiTL; ds_user_id=4194434228; sessionid=4194434228%3ARZuJYhdI1ShM68%3A4%3AAYcrGHgFt3l28pFQYUqJpxEDVtYLZSFWcwVYOpFxIg",
+      "X-Ig-App-Id": "238260118697367",
+      "X-Fb-Friendly-Name": "BarcelonaProfilePageQuery",
+      "X-Fb-Lsd": "_2R51o10uDz_DAit337oNT",
+      "Content-Type": "application/x-www-form-urlencoded",
+      "X-Asbd-Id": "129477",
+      "X-Csrftoken": "wcY95bJoztn2BmzzKlDoHzwqsHR6NiTL",
+      Accept: "*/*",
+      Origin: "https://www.threads.net",
+      "Sec-Fetch-Site": "same-origin",
+      "Sec-Fetch-Mode": "cors",
+      "Sec-Fetch-Dest": "empty",
+      Referer: "https://www.threads.net/",
+      "Accept-Encoding": "gzip, deflate, br",
+    },
+  });
   return userID || null;
 };
+
 
 async function fetchUserProfileData(userID: string) {
   const url = "https://www.threads.net/api/graphql";
