@@ -25,9 +25,9 @@ import {
 } from "@/components/ui/accordion";
 
 import { LuLoader } from "react-icons/lu";
-import axios, { HttpStatusCode } from "axios";
 import { useThreadFormStore } from "@/lib/store";
-import { sleep } from "@/lib/utils";
+import { fetchMedia } from "@/actions";
+import { useAction } from "next-safe-action/hooks";
 
 interface QueryType {
   type?: "getThreads" | "getUserProfile";
@@ -60,47 +60,26 @@ export function QueryForm({ type = "getThreads" }: QueryType) {
     resolver: zodResolver(FormSchema),
   });
 
-  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    try {
-      toast({
-        title: "Proccessing your request.",
-        variant: "default",
-        description: "Please wait while we're getting things things ready.",
-        itemID: "t",
-      });
+  const { execute, result, isExecuting } = useAction(fetchMedia, {
+    onSuccess: ({ data }) => {
+      if (data) {
+        // reset form and data if any
+        // console.log(data?.data?.media);
+        // form.reset({ thread_url: "" });
 
-      process.env.NODE_ENV === "production" ? await sleep(5000, 10000) : null;
-
-      if (
-        threads.hasOwnProperty("media") ||
-        threads.hasOwnProperty("full_name")
-      )
-        clearThreads();
-      await axios
-        .get(
-          `/api/${
-            type === "getThreads" ? "getThreads" : "getUserProfile"
-          }/?url=${data.thread_url}`
-        )
-        .then((res) => {
-          if (res.status === HttpStatusCode.Ok) {
-            // reset form and data if any
-            form.reset({ thread_url: "" });
-
-            setThreads(res.data);
-            toast({
-              title: "Ready to Download",
-              variant: "default",
-              description:
-                "Congrats! Click the Download Threads Button to get your video downloaded",
-              duration: 3000,
-            });
-            // console.log(threads);
-          } else {
-            !threads.hasOwnProperty("media") && clearThreads();
-          }
+        setThreads(data.data);
+        toast({
+          title: "Ready to Download",
+          variant: "default",
+          description:
+            "Congrats! Click the Download Threads Button to get your video downloaded",
+          duration: 3000,
         });
-    } catch (error) {
+      } else {
+        !threads.hasOwnProperty("media") && clearThreads();
+      }
+    },
+    onError: () => {
       !threads.hasOwnProperty("media") && clearThreads();
       toast({
         title: "Opps!!",
@@ -108,9 +87,64 @@ export function QueryForm({ type = "getThreads" }: QueryType) {
         variant: "destructive",
         duration: 5000,
       });
-      console.log("Nope");
-    }
+    },
+  });
+
+  const onSubmit = async (formData: z.infer<typeof FormSchema>) => {
+    await execute({
+      usernameOrURL: formData.thread_url,
+      type,
+    });
+    // const res = await fetchMedia({
+    //   usernameOrURL: formData.thread_url,
+    //   type,
+    // });
+    // // Result keys.
+    // const { data, validationErrors, bindArgsValidationErrors, serverError } =
+    //   res;
+    // try {
+    //   toast({
+    //     title: "Proccessing your request.",
+    //     variant: "default",
+    //     description: "Please wait while we're getting things things ready.",
+    //     itemID: "t",
+    //   });
+    //   process.env.NODE_ENV === "production" ? await sleep(5000, 10000) : null;
+    //   if (
+    //     threads.hasOwnProperty("media") ||
+    //     threads.hasOwnProperty("full_name")
+    //   )
+    //     clearThreads();
+    //   await fetchMedia(data.thread_url, type).then((res) => {
+    //     if (res?.status === HttpStatusCode.Ok) {
+    //       // reset form and data if any
+    //       form.reset({ thread_url: "" });
+    //       setThreads(res?.data);
+    //       toast({
+    //         title: "Ready to Download",
+    //         variant: "default",
+    //         description:
+    //           "Congrats! Click the Download Threads Button to get your video downloaded",
+    //         duration: 3000,
+    //       });
+    //       // console.log(threads);
+    //     } else {
+    //       !threads.hasOwnProperty("media") && clearThreads();
+    //     }
+    //   });
+    // } catch (error) {
+    //   !threads.hasOwnProperty("media") && clearThreads();
+    //   toast({
+    //     title: "Opps!!",
+    //     description: "We are looking into what's went wrong.",
+    //     variant: "destructive",
+    //     duration: 5000,
+    //   });
+    //   console.log("Nope");
+    // }
   };
+
+  console.log(threads);
 
   return (
     <Form {...form}>
@@ -185,9 +219,9 @@ export function QueryForm({ type = "getThreads" }: QueryType) {
           className="w-full rounded-xl"
           type="submit"
           size={"lg"}
-          disabled={form.formState.isSubmitting}
+          disabled={isExecuting}
         >
-          {form.formState.isSubmitting ? (
+          {isExecuting ? (
             <>
               <LuLoader className="mr-2 h-5 w-5 animate-spin duration-1000 ease-in-out" />
               Please wait ...
