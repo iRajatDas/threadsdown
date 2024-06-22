@@ -68,8 +68,6 @@ export function QueryForm({ type = "getThreads" }: QueryType) {
         // console.log(data?.data?.media);
         // form.reset({ thread_url: "" });
 
-        process.env.NODE_ENV === "production" ? await sleep(5000, 10000) : null;
-
         setThreads(data.data);
         toast({
           title: "Ready to Download",
@@ -94,6 +92,7 @@ export function QueryForm({ type = "getThreads" }: QueryType) {
   });
 
   const onSubmit = async (formData: z.infer<typeof FormSchema>) => {
+    // process.env.NODE_ENV === "production" ? await sleep(5000, 10000) : null;
     await execute({
       usernameOrURL: formData.thread_url,
       type,
