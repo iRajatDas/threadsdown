@@ -28,6 +28,7 @@ import { LuLoader } from "react-icons/lu";
 import { useThreadFormStore } from "@/lib/store";
 import { fetchMedia } from "@/actions";
 import { useAction } from "next-safe-action/hooks";
+import { sleep } from "@/lib/utils";
 
 interface QueryType {
   type?: "getThreads" | "getUserProfile";
@@ -61,11 +62,13 @@ export function QueryForm({ type = "getThreads" }: QueryType) {
   });
 
   const { execute, result, isExecuting } = useAction(fetchMedia, {
-    onSuccess: ({ data }) => {
+    onSuccess: async ({ data }) => {
       if (data) {
         // reset form and data if any
         // console.log(data?.data?.media);
         // form.reset({ thread_url: "" });
+
+        process.env.NODE_ENV === "production" ? await sleep(5000, 10000) : null;
 
         setThreads(data.data);
         toast({
