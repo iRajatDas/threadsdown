@@ -17,6 +17,7 @@ const FormSection: FC<QueryType> = ({ type = "getThreads" }) => {
       <div className="mt-4 rounded-2xl border bg-barcelona-secondary-background px-default py-4">
         <QueryForm type={type} />
       </div>
+      <AdSenseAd name="AB_FOLD_MEDIUM_RECTANGLE" className="mb-4" />
     </div>
   );
 };
