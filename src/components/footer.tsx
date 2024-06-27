@@ -45,9 +45,17 @@ const Footer = () => {
         <span className="block">
           <Link
             href={"https://github.com/iRajatDas"}
-            className="inline-flex items-center py-2 gap-1 text-barcelona-primary-text"
+            className="inline-flex items-center gap-1 py-2 text-barcelona-primary-text"
           >
             <GitHubLogoIcon /> GitHub
+          </Link>
+        </span>
+        <span className="block">
+          <Link
+            href={"https://rapidyt.com"}
+            className="inline-flex items-center gap-1 py-2 text-barcelona-primary-text"
+          >
+            Rapid YT
           </Link>
         </span>
       </p>
