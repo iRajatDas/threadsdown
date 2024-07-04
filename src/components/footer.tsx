@@ -50,14 +50,14 @@ const Footer = () => {
             <GitHubLogoIcon /> GitHub
           </Link>
         </span>
-        <span className="block">
+        {/* <span className="block">
           <Link
             href={"https://rapidyt.com"}
             className="inline-flex items-center gap-1 py-2 text-barcelona-primary-text"
           >
             Rapid YT
           </Link>
-        </span>
+        </span> */}
       </p>
       <p className="to-barcelona-secondary-text text-center text-sm">
         Not affiliated with Meta, Threads or any 3rd party.
